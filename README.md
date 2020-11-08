@@ -45,5 +45,3 @@ No license yet
 Website - [www.lavertu.dev](https://www.lavertu.dev)
 
 Project Link: [Banshee](https://github.com/elavertu9/Banshee)
-
-Nick C.
