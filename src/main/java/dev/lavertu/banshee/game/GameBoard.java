@@ -1,3 +1,5 @@
+package dev.lavertu.banshee.game;
+
 import dev.lavertu.banshee.game.Cannon;
 import dev.lavertu.banshee.game.Color;
 import dev.lavertu.banshee.game.Coordinate;
