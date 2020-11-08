@@ -1,17 +1,16 @@
 package dev.lavertu.banshee.game;
 
-import dev.lavertu.banshee.game.Color;
-import dev.lavertu.banshee.game.Coordinate;
+public class Soldier implements iPiece{
 
-public class EmptyPiece implements iPiece{
 	private boolean isCaptured = false;
 	private boolean isFaceUp = false;
 	private int rank = 1;
-	private Color color = Color.NEUTRAL;
+	private Color color;
 	private Coordinate position;
 
 	@Override
 	public iPiece capture(Coordinate c) {
+		isCaptured = true;
 		return this;
 	}
 
@@ -32,7 +31,7 @@ public class EmptyPiece implements iPiece{
 
 	@Override
 	public int getRank() {
-		return 0;
+		return 1;
 	}
 
 	@Override
@@ -42,6 +41,6 @@ public class EmptyPiece implements iPiece{
 
 	@Override
 	public Coordinate getPosition() {
-		return null;
+		return new Coordinate(0, 0);
 	}
 }

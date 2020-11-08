@@ -11,10 +11,10 @@ public class GameBoard {
 	private static final int ROWS = 4;
 
 	public GameBoard(){
-
+		this.board = new iPiece[ROWS][COLS];
 	}
 
-	public iPiece pieceAt(int row, int col){
+	public iPiece pieceAt(Coordinate coordinate){
 		return new Cannon(); // placeholder piece
 	}
 
