@@ -2,38 +2,46 @@ package dev.lavertu.banshee.game;
 
 public class Chariot implements iPiece {
 
+	private boolean isCaptured = false;
+	private boolean isFaceUp = false;
+	private static final int RANK = 6;
+	private Color color;
+	private Coordinate position;
+
 	@Override
 	public iPiece capture(Coordinate coordinate) {
-		return null;
+		isCaptured = true;
+		position = coordinate;
+		return this;
 	}
 
 	@Override
 	public void setPosition(Coordinate coordinate) {
-
+		position = coordinate;
 	}
 
 	@Override
 	public boolean isCaptured() {
-		return false;
+		return isCaptured;
 	}
 
 	@Override
 	public boolean isFaceUp() {
-		return false;
+		return isFaceUp;
 	}
 
 	@Override
 	public int getRank() {
-		return 0;
+		return RANK;
 	}
 
 	@Override
 	public Color getColor() {
-		return null;
+		return color;
 	}
 
 	@Override
 	public Coordinate getPosition() {
-		return null;
+		return position;
 	}
 }

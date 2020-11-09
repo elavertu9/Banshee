@@ -4,44 +4,44 @@ public class Soldier implements iPiece {
 
 	private boolean isCaptured = false;
 	private boolean isFaceUp = false;
-	private int rank = 1;
+	private static final int RANK = 1;
 	private Color color;
 	private Coordinate position;
 
 	@Override
 	public iPiece capture(Coordinate coordinate) {
 		isCaptured = true;
-
+		position = coordinate;
 		return this;
 	}
 
 	@Override
 	public void setPosition(Coordinate coordinate) {
-
+		position = coordinate;
 	}
 
 	@Override
 	public boolean isCaptured() {
-		return false;
+		return isCaptured;
 	}
 
 	@Override
 	public boolean isFaceUp() {
-		return false;
+		return isFaceUp;
 	}
 
 	@Override
 	public int getRank() {
-		return 1;
+		return RANK;
 	}
 
 	@Override
 	public Color getColor() {
-		return null;
+		return color;
 	}
 
 	@Override
 	public Coordinate getPosition() {
-		return new Coordinate(0, 0);
+		return position;
 	}
 }

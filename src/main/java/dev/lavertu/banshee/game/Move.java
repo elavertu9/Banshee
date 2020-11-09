@@ -1,6 +1,7 @@
 package dev.lavertu.banshee.game;
 
 public class Move {
+
 	private Coordinate to;
 	private Coordinate from;
 	private MoveType moveType;
