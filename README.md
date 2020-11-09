@@ -5,14 +5,13 @@
 
 * [About the Project](#about-the-project)
   * [Built With](#built-with)
+* [Tools](#tools)
 * [Installation](#installation)
 * [GitHub Work Flow](#github-work-flow)
 * [Usage](#usage)
 * [License](#license)
 * [Contact](#contact)
 
-
-<!-- ABOUT THE PROJECT -->
 ## About The Project
 Banshee is in progress... Development is supported on the following platforms:
 * macOS
@@ -25,8 +24,12 @@ Banshee is built using Java, Maven, Swift
 * [Swift](https://swift.org/)
 * [Springboot](https://spring.io/projects/spring-boot)
 
+## Tools
+* [Discord](https://discord.gg/YEz33PFm)
+* [ZenHub](https://app.zenhub.com/workspaces/devlavertubanshee-5fa9919c85fdee000efdb4c0/board?repos=310688472)
+* [LucidChart](https://lucid.app/invitations/accept/f3095299-7a80-47d4-8338-031f6f34854b)
+* [Intellij](https://www.jetbrains.com/idea/)
 
-<!-- GETTING STARTED -->
 ## Installation
 1. Clone repository
 2. More coming soon
@@ -65,17 +68,12 @@ git pull upstream master
 git merge master
 ```
 
-<!-- USAGE EXAMPLES -->
 ## Usage
 1. Coming soon
 
-
-<!-- LICENSE -->
 ## License
 No license yet
 
-
-<!-- CONTACT -->
 ## Contact
 Website - [www.lavertu.dev](https://www.lavertu.dev)
 
