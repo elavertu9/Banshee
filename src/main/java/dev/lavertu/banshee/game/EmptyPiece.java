@@ -6,7 +6,7 @@ import dev.lavertu.banshee.game.Coordinate;
 public class EmptyPiece implements iPiece{
 	private boolean isCaptured = false;
 	private boolean isFaceUp = false;
-	private int rank = 1;
+	private int rank = 0;
 	private Color color = Color.NEUTRAL;
 	private Coordinate position;
 

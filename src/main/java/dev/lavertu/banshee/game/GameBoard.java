@@ -15,19 +15,36 @@ public class GameBoard {
 	}
 
 	public iPiece pieceAt(Coordinate coordinate){
-		return new Cannon(); // placeholder piece
+		return board[coordinate.row][coordinate.col];
 	}
 
-	public void addPiece(iPiece p){
-
+	public void addPiece(Coordinate coordinate, iPiece piece){
+		board[coordinate.row][coordinate.col] = piece;
 	}
 
-	public iPiece removePiece(iPiece p){
-		return new Cannon(); // placeholder piece
+	public iPiece removePiece(Coordinate coordinate){
+		iPiece piece = pieceAt(coordinate);
+		addPiece(coordinate, new EmptyPiece());
+		return piece;
 	}
 
 	public String toString(){
-		return "This is the board.";
+		String boardString = "- - - - - - - - - - - - - - - - -\n";
+		for(int i = 0; i < 4; i++){
+			boardString += "| ";
+			for(int j = 0; j < 8; j++){
+				if(pieceAt(new Coordinate(i, j)).isFaceUp()) {
+					boardString += pieceAt(new Coordinate(i, j)).getRank();
+					boardString += " | ";
+				}
+				else{
+					boardString += "X | ";
+				}
+			}
+			boardString += "\n";
+		}
+		boardString += "- - - - - - - - - - - - - - - - -\n";
+		return boardString;
 	}
 
 }

@@ -11,6 +11,7 @@ public class Soldier implements iPiece{
 	@Override
 	public iPiece capture(Coordinate c) {
 		isCaptured = true;
+
 		return this;
 	}
 
