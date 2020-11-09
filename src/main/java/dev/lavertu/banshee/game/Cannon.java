@@ -1,14 +1,14 @@
 package dev.lavertu.banshee.game;
 
-public class Cannon implements iPiece{
+public class Cannon implements iPiece {
 
 	@Override
-	public iPiece capture(Coordinate c) {
+	public iPiece capture(Coordinate coordinate) {
 		return null;
 	}
 
 	@Override
-	public void move(Coordinate c) {
+	public void setPosition(Coordinate coordinate) {
 
 	}
 

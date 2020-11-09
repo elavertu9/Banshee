@@ -1,7 +1,7 @@
 package dev.lavertu.banshee.game;
 
-public enum MoveType{
-    FLIP,
-    CAPTURE,
-    TRAVEL
+public enum MoveType {
+	FLIP,
+	CAPTURE,
+	TRAVEL
 }

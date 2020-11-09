@@ -5,27 +5,27 @@ public class Move {
 	private Coordinate from;
 	private MoveType moveType;
 
-	public Move(Coordinate from, Coordinate to, MoveType moveType){
+	public Move(Coordinate from, Coordinate to, MoveType moveType) {
 		this.to = to;
 		this.from = from;
 		this.moveType = moveType;
 	}
 
-	public Coordinate getTo(){
+	public Coordinate getTo() {
 		return to;
 	}
 
-	public Coordinate getFrom(){
+	public Coordinate getFrom() {
 		return from;
 	}
 
-	public MoveType getMoveType(){
+	public MoveType getMoveType() {
 		return moveType;
 	}
 
-	public String toString(){
+	public String toString() {
 		return moveType + ": from (" + from.getRow() + ", "
-				+ from.getCol() + ") to (" + to.getRow() + ", "
-				+ to.getCol() + ")\n";
+				+ from.getColumn() + ") to (" + to.getRow() + ", "
+				+ to.getColumn() + ")\n";
 	}
 }

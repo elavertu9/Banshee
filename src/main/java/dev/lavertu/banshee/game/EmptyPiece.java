@@ -1,22 +1,14 @@
 package dev.lavertu.banshee.game;
 
-import dev.lavertu.banshee.game.Color;
-import dev.lavertu.banshee.game.Coordinate;
-
-public class EmptyPiece implements iPiece{
-	private boolean isCaptured = false;
-	private boolean isFaceUp = false;
-	private int rank = 0;
-	private Color color = Color.NEUTRAL;
-	private Coordinate position;
+public class EmptyPiece implements iPiece {
 
 	@Override
-	public iPiece capture(Coordinate c) {
-		return this;
+	public iPiece capture(Coordinate coordinate) {
+		return null;
 	}
 
 	@Override
-	public void move(Coordinate c) {
+	public void setPosition(Coordinate coordinate) {
 
 	}
 

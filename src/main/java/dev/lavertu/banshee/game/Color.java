@@ -1,6 +1,6 @@
 package dev.lavertu.banshee.game;
 
-public enum Color{
+public enum Color {
 	BLACK,
 	WHITE,
 	NEUTRAL

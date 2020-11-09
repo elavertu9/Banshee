@@ -2,30 +2,31 @@ package dev.lavertu.banshee.game;
 
 public class Coordinate { 
 
-	int row, col;
+	private int row;
+	private int column;
 	
-	public Coordinate(int row, int col) {
+	public Coordinate(int row, int column) {
 		this.row = row;
-		this.col = col;
+		this.column = column;
 	}
 
 	public int getRow() {
-		return this.row;
+		return row;
 	}
 
-	public int getCol() {
-		return this.col;
+	public int getColumn() {
+		return column;
 	}
 
 	public void setRow(int row) {
 		this.row = row;
 	}
 
-	public void setCol(int col) {
-		this.col = col;
+	public void setColumn(int column) {
+		this.column = column;
 	}
 
 	public String toString(){
-		return "Row: " + getRow() + " Col: " + getCol();
+		return "Row: " + getRow() + " Col: " + getColumn();
 	}
 }

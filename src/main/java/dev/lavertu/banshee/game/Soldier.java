@@ -1,6 +1,6 @@
 package dev.lavertu.banshee.game;
 
-public class Soldier implements iPiece{
+public class Soldier implements iPiece {
 
 	private boolean isCaptured = false;
 	private boolean isFaceUp = false;
@@ -9,14 +9,14 @@ public class Soldier implements iPiece{
 	private Coordinate position;
 
 	@Override
-	public iPiece capture(Coordinate c) {
+	public iPiece capture(Coordinate coordinate) {
 		isCaptured = true;
 
 		return this;
 	}
 
 	@Override
-	public void move(Coordinate c) {
+	public void setPosition(Coordinate coordinate) {
 
 	}
 

@@ -1,10 +1,5 @@
 package dev.lavertu.banshee.game;
 
-import dev.lavertu.banshee.game.Cannon;
-import dev.lavertu.banshee.game.Color;
-import dev.lavertu.banshee.game.Coordinate;
-import dev.lavertu.banshee.game.iPiece;
-
 public class GameBoard {
 	private iPiece[][] board;
 	private static final int COLS = 8;
@@ -15,11 +10,11 @@ public class GameBoard {
 	}
 
 	public iPiece pieceAt(Coordinate coordinate){
-		return board[coordinate.row][coordinate.col];
+		return board[coordinate.getRow()][coordinate.getColumn()];
 	}
 
 	public void addPiece(Coordinate coordinate, iPiece piece){
-		board[coordinate.row][coordinate.col] = piece;
+		board[coordinate.getRow()][coordinate.getColumn()] = piece;
 	}
 
 	public iPiece removePiece(Coordinate coordinate){
