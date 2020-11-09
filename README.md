@@ -6,6 +6,7 @@
 * [About the Project](#about-the-project)
   * [Built With](#built-with)
 * [Installation](#installation)
+* [GitHub Work Flow](#github-work-flow)
 * [Usage](#usage)
 * [License](#license)
 * [Contact](#contact)
@@ -29,6 +30,40 @@ Banshee is built using Java, Maven, Swift
 ## Installation
 1. Clone repository
 2. More coming soon
+
+## GitHub Work Flow
+1. Clone repository using HTTPS
+```sh
+git clone https://github.com/elavertu9/Banshee.git
+```
+2. Navigate into the root of the Banshee directory
+3. Branch the code base
+```sh
+git branch <branch-name>
+```
+4. Checkout newly created branch
+```sh
+git checkout <branch-name>
+```
+5. Satisfied with changes? Need to add changes, commit, and push
+```sh
+git add <file-name(s)>
+```
+```sh
+git commit -m"detailed commit message"
+```
+```sh
+git push
+```
+6. To place your changes into master, navigate to the repository on GitHub and create a pull request out of your recently pushed changes. Wait for a reviewer to merge the code.
+7. If your master branch is out of date, you can run
+```sh
+git pull upstream master
+```
+8. From your branch
+```sh
+git merge master
+```
 
 <!-- USAGE EXAMPLES -->
 ## Usage
