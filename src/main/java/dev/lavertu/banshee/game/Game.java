@@ -12,6 +12,8 @@ public class Game {
     private boolean playerForfeit = false;
     private Player forfeitPlayer;
     private Player turn;
+    private Color player1Color = Color.BLACK;
+    private Color player2Color = Color.WHITE;
 
     public Game(Player player1, Player player2) {
         this.player1 = player1;
@@ -42,6 +44,14 @@ public class Game {
 
     public void performFlip(Move move) {
 
+    }
+
+    public Color getPlayer1Color() {
+        return player1Color;
+    }
+
+    public Color getPlayer2Color() {
+        return player2Color;
     }
 
     public String printGameBoard() {
