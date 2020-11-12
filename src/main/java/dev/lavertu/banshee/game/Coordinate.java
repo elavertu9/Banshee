@@ -26,6 +26,7 @@ public class Coordinate {
 		this.column = column;
 	}
 
+	@Override
 	public String toString(){
 		return "Row: " + getRow() + " Col: " + getColumn();
 	}

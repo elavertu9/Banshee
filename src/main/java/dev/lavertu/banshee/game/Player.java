@@ -1,5 +1,7 @@
 package dev.lavertu.banshee.game;
 
+import dev.lavertu.banshee.game.pieces.iPiece;
+
 import java.util.ArrayList;
 
 public class Player {
