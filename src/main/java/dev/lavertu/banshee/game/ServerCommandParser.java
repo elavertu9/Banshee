@@ -3,7 +3,6 @@ package dev.lavertu.banshee.game;
 import dev.lavertu.banshee.game.exception.CoordinateOutOfBoundsException;
 import dev.lavertu.banshee.game.exception.IllegalMoveException;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class ServerCommandParser {
@@ -20,7 +19,7 @@ public class ServerCommandParser {
         String input;
         while(true) {
             try {
-                input = getParser().nextLine();
+                input = parser.nextLine();
                 handleInput(input);
                 System.out.println(game.printGameBoard());
             }catch(Exception e) {
@@ -29,7 +28,7 @@ public class ServerCommandParser {
         }
     }
 
-    private void handleInput(String input) throws IllegalMoveException, CoordinateOutOfBoundsException {
+    private void handleInput(String input) throws IllegalMoveException {
         String[] inputArray = input.split(" ");
         if(inputArray.length > 0) {
             String command = inputArray[0].toLowerCase();
@@ -52,6 +51,8 @@ public class ServerCommandParser {
             } else if(command.equals("exit")) {
                 closeParser();
                 System.exit(0);
+            } else if(command.equals("allflip")) {
+                game.flipAll();
             } else {
                 printUsage();
             }
@@ -65,13 +66,8 @@ public class ServerCommandParser {
         converted[1] = Integer.parseInt(coordinateArray[1]);
         return converted;
     }
-
-    public Scanner getParser() {
-        return parser;
-    }
-
     private void closeParser() {
-        getParser().close();
+        parser.close();
     }
 
     public Game getGame() {
