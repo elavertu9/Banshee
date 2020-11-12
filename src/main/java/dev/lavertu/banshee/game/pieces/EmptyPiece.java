@@ -1,4 +1,6 @@
-package dev.lavertu.banshee.game;
+package dev.lavertu.banshee.game.pieces;
+
+import dev.lavertu.banshee.game.Color;
 
 public class EmptyPiece implements iPiece {
 
@@ -6,18 +8,11 @@ public class EmptyPiece implements iPiece {
 	private boolean isFaceUp = true;
 	private static final int RANK = 0;
 	private Color color = Color.NEUTRAL;
-	private Coordinate position;
 
 	@Override
-	public iPiece capture(Coordinate coordinate) {
+	public iPiece capture() {
 		isCaptured = true;
-		position = coordinate;
 		return this;
-	}
-
-	@Override
-	public void setPosition(Coordinate coordinate) {
-		position = coordinate;
 	}
 
 	@Override
@@ -41,7 +36,21 @@ public class EmptyPiece implements iPiece {
 	}
 
 	@Override
-	public Coordinate getPosition() {
-		return position;
+	public void flipPiece() {
+		isFaceUp = true;
+	}
+
+	@Override
+	public boolean getIsFaceUp() {
+		return isFaceUp;
+	}
+
+	public String toString() {
+		return "";
+	}
+
+	@Override
+	public int compareTo(iPiece piece) {
+		return this.getRank() - piece.getRank();
 	}
 }

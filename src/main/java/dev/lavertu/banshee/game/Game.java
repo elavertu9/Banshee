@@ -1,6 +1,6 @@
 package dev.lavertu.banshee.game;
 
-import dev.lavertu.banshee.game.exception.IllegalMoveException;
+import dev.lavertu.banshee.game.exception.*;
 
 public class Game {
 
@@ -14,36 +14,74 @@ public class Game {
     private Player turn;
     private Color player1Color = Color.BLACK;
     private Color player2Color = Color.WHITE;
+    private RuleEnforcer ruleEnforcer;
 
     public Game(Player player1, Player player2) {
         this.player1 = player1;
         this.player2 = player2;
         this.turn = player1;
         this.gameBoard = new GameBoard();
+        this.ruleEnforcer = new RuleEnforcer(gameBoard);
     }
 
     public void makeMove(Move move) throws IllegalMoveException {
-        if(move.getMoveType() == MoveType.CAPTURE) {
-            performCapture(move);
-        }else if(move.getMoveType() == MoveType.TRAVEL) {
-            performTravel(move);
-        } else if(move.getMoveType() == MoveType.FLIP) {
-            performFlip(move);
-        } else {
+        try {
+            if(move.getMoveType() == MoveType.CAPTURE) {
+                performCapture(move);
+            }else if(move.getMoveType() == MoveType.TRAVEL) {
+                performTravel(move);
+            } else if(move.getMoveType() == MoveType.FLIP) {
+                performFlip(move);
+            } else {
+                throw new IllegalMoveException();
+            }
+        } catch(CaptureException | TravelException | FlipException e) {
+            e.printStackTrace();
             throw new IllegalMoveException();
+        }
+
+    }
+
+    private void performCapture(Move move) throws CaptureException {
+        try {
+            if(ruleEnforcer.isValidCapture(move)) {
+                gameBoard.removePiece(move.getTo());
+                gameBoard.swapPieces(move.getFrom(), move.getTo());
+            }
+        } catch(CoordinateOutOfBoundsException | IllegalCaptureException e) {
+            e.printStackTrace();
+            throw new CaptureException();
         }
     }
 
-    public void performCapture(Move move) {
-
+    private void performTravel(Move move) throws TravelException {
+        try {
+            if(ruleEnforcer.isValidTravel(move)) {
+                gameBoard.swapPieces(move.getFrom(), move.getTo());
+            }
+        } catch(CoordinateOutOfBoundsException | SpaceOccupiedException e) {
+            e.printStackTrace();
+            throw new TravelException();
+        }
     }
 
-    public void performTravel(Move move) {
-
+    private void performFlip(Move move) throws FlipException {
+        try {
+            if(ruleEnforcer.isValidFlip(move)) {
+                gameBoard.pieceAt(move.getTo()).flipPiece();
+            }
+        } catch(CoordinateOutOfBoundsException | PieceFaceUpException e) {
+            e.printStackTrace();
+            throw new FlipException();
+        }
     }
 
-    public void performFlip(Move move) {
+    public Player getPlayer1() {
+        return player1;
+    }
 
+    public Player getPlayer2() {
+        return player2;
     }
 
     public Color getPlayer1Color() {
@@ -55,6 +93,7 @@ public class Game {
     }
 
     public String printGameBoard() {
-        return gameBoard.toString();
+        String str = getPlayer1().getName() + " - " + getPlayer1Color() + "\n" + getPlayer2().getName() + " - " + getPlayer2Color() + "\n" + gameBoard.toString();
+        return str;
     }
 }
