@@ -76,6 +76,14 @@ public class Game {
         }
     }
 
+    public void flipAll() {
+        for(int i = 0; i < 4; i++) {
+            for(int j = 0; j < 8; j++) {
+                gameBoard.pieceAt(new Coordinate(i, j)).flipPiece();
+            }
+        }
+    }
+
     public Player getPlayer1() {
         return player1;
     }
