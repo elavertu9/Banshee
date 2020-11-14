@@ -4,6 +4,7 @@ import dev.lavertu.banshee.game.exception.*;
 import dev.lavertu.banshee.game.pieces.iPiece;
 
 public class RuleEnforcer {
+
     private GameBoard gameBoard;
 
     public RuleEnforcer(GameBoard gameboard) {

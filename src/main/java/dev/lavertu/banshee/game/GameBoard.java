@@ -6,6 +6,7 @@ import java.util.Stack;
 import java.util.Collections;
 
 public class GameBoard {
+
 	private iPiece[][] board;
 	private static final int COLS = 8;
 	private static final int ROWS = 4;

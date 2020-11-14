@@ -101,7 +101,6 @@ public class Game {
     }
 
     public String printGameBoard() {
-        String str = getPlayer1().getName() + " - " + getPlayer1Color() + "\n" + getPlayer2().getName() + " - " + getPlayer2Color() + "\n" + gameBoard.toString();
-        return str;
+        return getPlayer1().getName() + " - " + getPlayer1Color() + "\n" + getPlayer2().getName() + " - " + getPlayer2Color() + "\n" + gameBoard.toString();
     }
 }
