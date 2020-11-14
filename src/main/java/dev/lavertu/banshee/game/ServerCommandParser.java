@@ -1,6 +1,5 @@
 package dev.lavertu.banshee.game;
 
-import dev.lavertu.banshee.game.exception.CoordinateOutOfBoundsException;
 import dev.lavertu.banshee.game.exception.IllegalMoveException;
 
 import java.util.Scanner;
