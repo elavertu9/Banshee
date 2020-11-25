@@ -102,8 +102,8 @@ public class GameBoard {
 	}
 
 	private void init() {
-		for(int row = 0; row < 4; row++) {
-			for(int col = 0; col < 8; col++) {
+		for(int row = 0; row < ROWS; row++) {
+			for(int col = 0; col < COLS; col++) {
 				addPiece(new Coordinate(row, col), pieces.pop());
 			}
 		}
@@ -138,17 +138,16 @@ public class GameBoard {
 	}
 
 	@Override
-	public String toString(){
-		String boardString = "- ";
+	public String toString() {
+		StringBuilder boardString = new StringBuilder("- ");
 		for(int i = 0; i < COLS; i++) {
-			boardString += ("\t" + i + "\t- ");
+			boardString.append("\t").append(i).append("\t- ");
 		}
-    
-		boardString += "\n";
+		boardString.append("\n");
 
-		for(int row = 0; row < 4; row++){
-			boardString += (row + "| ");
-			for(int col = 0; col < 8; col++){
+		for(int row = 0; row < ROWS; row++){
+			boardString.append(row).append("| ");
+			for(int col = 0; col < COLS; col++){
 				if(pieceAt(new Coordinate(row, col)).isFaceUp()) {
 					iPiece current = pieceAt(new Coordinate(row, col));
 					String color = "";
@@ -158,20 +157,20 @@ public class GameBoard {
 					if(current.getColor() == Color.BLACK) {
 						color = "B";
 					}
-					boardString += ("\t" + current.getRank() + color + "\t|");
+					boardString.append("\t").append(current.getRank()).append(color).append("\t|");
 				}
 				else{
-					boardString += "\tX\t| ";
+					boardString.append("\tX\t| ");
 				}
 			}
-			boardString += "\n";
+			boardString.append("\n");
 		}
 
 		for(int i = 0; i < COLS+1; i++) {
-			boardString += ("-\t\t");
+			boardString.append("-\t\t");
 		}
-		boardString += "\n";
-		return boardString;
+		boardString.append("\n");
+		return boardString.toString();
 	}
 
 }
