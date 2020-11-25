@@ -5,12 +5,8 @@ import dev.lavertu.banshee.user.User;
 import dev.lavertu.banshee.utils.ServerCommandParser;
 import org.springframework.boot.SpringApplication; // Do not delete even if not used
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
-@RestController
 public class Main
 {
     public static void commandParserTesting() {
@@ -24,12 +20,7 @@ public class Main
 
     // This class is for testing purposes
     public static void main(String[] args) {
-        //commandParserTesting();
-        SpringApplication.run(Main.class, args);
-    }
-
-    @GetMapping("/api/hello")
-    public String sayHello(@RequestParam(value = "myName", defaultValue = "") String name) {
-        return String.format("Hello %s! The Banshee Server is up and running", name);
+        commandParserTesting();
+        //SpringApplication.run(Main.class, args);
     }
 }

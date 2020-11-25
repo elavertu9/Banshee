@@ -107,4 +107,24 @@ public class RuleEnforcer {
     private boolean canCapture(Move move) {
         return game.getGameBoard().pieceAt(move.getFrom()).compareTo(game.getGameBoard().pieceAt(move.getTo())) >= 0;
     }
+
+    /*private boolean restrictToSingleSpace() {
+
+    }
+
+    private boolean restrictUp() {
+
+    }
+
+    private boolean restrictDown() {
+
+    }
+
+    private boolean restrictRight() {
+
+    }
+
+    private boolean restrictLeft() {
+
+    }*/
 }
