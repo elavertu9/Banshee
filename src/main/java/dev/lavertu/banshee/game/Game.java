@@ -6,11 +6,15 @@ import dev.lavertu.banshee.user.Player;
 public class Game {
 
     private String gameId;
+    private Player player1;
+    private Player player2;
     private GameBoard gameBoard;
     private GameStats gameStats;
     private RuleEnforcer ruleEnforcer;
 
     public Game(Player player1, Player player2) {
+        this.player1 = player1;
+        this.player2 = player2;
         this.gameStats = new GameStats(player1, player2);
         this.gameBoard = new GameBoard();
         this.ruleEnforcer = new RuleEnforcer(this);
@@ -75,6 +79,14 @@ public class Game {
         }
     }
 
+    public Player getPlayer1() {
+        return player1;
+    }
+
+    public Player getPlayer2() {
+        return player2;
+    }
+
     public GameBoard getGameBoard() {
         return gameBoard;
     }
@@ -85,6 +97,6 @@ public class Game {
 
     @Override
     public String toString() {
-        return gameStats.getPlayer1().getName() + " - " + gameStats.getPlayer1Color() + "\n" + gameStats.getPlayer2().getName() + " - " + gameStats.getPlayer2Color() + "\n" + gameBoard.toString();
+        return player1.getName() + " - " + gameStats.getPlayer1Color() + "\n" + player2.getName() + " - " + gameStats.getPlayer2Color() + "\n" + gameBoard.toString();
     }
 }

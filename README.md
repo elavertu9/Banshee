@@ -30,6 +30,7 @@ Banshee is built using Java, Maven, Swift
 * [LucidChart](https://lucid.app/invitations/accept/f3095299-7a80-47d4-8338-031f6f34854b)
 * [Intellij](https://www.jetbrains.com/idea/)
     * [SonarLint](https://www.sonarlint.org/intellij)
+* [PostgreSQL](https://www.postgresql.org/download/)
 
 ## Installation
 1. In Intellij File > New Project > From Version Control
