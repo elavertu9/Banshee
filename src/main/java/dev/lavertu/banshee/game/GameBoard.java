@@ -131,9 +131,14 @@ public class GameBoard {
 	}
 
 	public String toString(){
-		String boardString = "- - - - - - - - - - - - - - - - -\n";
+		String boardString = "- ";
+		for(int i = 0; i < COLS; i++) {
+			boardString += ("\t" + i + "\t- ");
+		}
+		boardString += "\n";
+
 		for(int row = 0; row < 4; row++){
-			boardString += "| ";
+			boardString += (row + "| ");
 			for(int col = 0; col < 8; col++){
 				if(pieceAt(new Coordinate(row, col)).isFaceUp()) {
 					iPiece current = pieceAt(new Coordinate(row, col));
@@ -141,15 +146,13 @@ public class GameBoard {
 					if(current.getColor() == Color.WHITE) {
 						color = "W";
 					}
-
 					if(current.getColor() == Color.BLACK) {
 						color = "B";
 					}
-					boardString += current.getRank() + color;
-					boardString += " | ";
+					boardString += ("\t" + current.getRank() + color + "\t|");
 				}
 				else{
-					boardString += "X | ";
+					boardString += "\tX\t| ";
 				}
 			}
 			boardString += "\n";
