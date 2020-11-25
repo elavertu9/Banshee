@@ -1,6 +1,7 @@
 package dev.lavertu.banshee.game;
 
-import dev.lavertu.banshee.game.exception.*;
+import dev.lavertu.banshee.exception.*;
+import dev.lavertu.banshee.user.Player;
 
 public class Game {
 

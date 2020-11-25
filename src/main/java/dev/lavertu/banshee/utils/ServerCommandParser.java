@@ -1,6 +1,10 @@
-package dev.lavertu.banshee.game;
+package dev.lavertu.banshee.utils;
 
-import dev.lavertu.banshee.game.exception.IllegalMoveException;
+import dev.lavertu.banshee.exception.IllegalMoveException;
+import dev.lavertu.banshee.game.Coordinate;
+import dev.lavertu.banshee.game.Game;
+import dev.lavertu.banshee.game.Move;
+import dev.lavertu.banshee.game.MoveType;
 
 import java.util.Scanner;
 

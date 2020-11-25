@@ -1,4 +1,4 @@
-package dev.lavertu.banshee.game;
+package dev.lavertu.banshee.user;
 
 import dev.lavertu.banshee.game.pieces.iPiece;
 
