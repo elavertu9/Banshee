@@ -50,8 +50,13 @@ public class Horse implements iPiece {
 	}
 
 	@Override
+	public String getPieceName() {
+		return "Horse";
+	}
+
+	@Override
 	public String toString() {
-		return "";
+		return getPieceName() + "(" + RANK + ")\n\tColor: " + color + "\n\tisCaptured: " + isCaptured + "\n\tisFaceUp: " + isFaceUp + "\n";
 	}
 
 	@Override

@@ -50,8 +50,13 @@ public class Cannon implements iPiece {
 	}
 
 	@Override
+	public String getPieceName() {
+		return "Cannon";
+	}
+
+	@Override
 	public String toString() {
-		return "";
+		return getPieceName() + "(" + RANK + ")\n\tColor: " + color + "\n\tisCaptured: " + isCaptured + "\n\tisFaceUp: " + isFaceUp + "\n";
 	}
 
 	@Override
