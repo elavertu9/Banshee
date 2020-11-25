@@ -74,6 +74,6 @@ public class ServerCommandParser {
     }
 
     private void printUsage() {
-        System.out.println("\nUsage: \n\tflip <row,col>\n\tcapture <from.row,from.col> <to.row,to.col>\n\ttravel <from.row,from.col> <to.row,to.col>\n");
+        System.out.println("\nUsage: \n\tflip <row,col>\n\tcapture <from.row,from.col> <to.row,to.col>\n\ttravel <from.row,from.col> <to.row,to.col>\n\tallflip\n");
     }
 }

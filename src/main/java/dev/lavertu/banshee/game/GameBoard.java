@@ -13,7 +13,7 @@ public class GameBoard {
 	private Stack<iPiece> pieces;
 
 
-	public GameBoard(){
+	public GameBoard() {
 		this.board = new iPiece[ROWS][COLS];
 		this.pieces = new Stack<>();
 		populatePieces();
@@ -110,11 +110,11 @@ public class GameBoard {
 		}
 	}
 
-	public iPiece pieceAt(Coordinate coordinate){
+	public iPiece pieceAt(Coordinate coordinate) {
 		return board[coordinate.getRow()][coordinate.getColumn()];
 	}
 
-	public void addPiece(Coordinate coordinate, iPiece piece){
+	public void addPiece(Coordinate coordinate, iPiece piece) {
 		board[coordinate.getRow()][coordinate.getColumn()] = piece;
 	}
 
@@ -124,17 +124,19 @@ public class GameBoard {
 		addPiece(fromCoordinate, temp);
 	}
 
-	public iPiece removePiece(Coordinate coordinate){
+	public iPiece removePiece(Coordinate coordinate) {
 		iPiece piece = pieceAt(coordinate);
 		addPiece(coordinate, new EmptyPiece());
 		return piece;
 	}
 
+	@Override
 	public String toString(){
 		String boardString = "- ";
 		for(int i = 0; i < COLS; i++) {
 			boardString += ("\t" + i + "\t- ");
 		}
+    
 		boardString += "\n";
 
 		for(int row = 0; row < 4; row++){

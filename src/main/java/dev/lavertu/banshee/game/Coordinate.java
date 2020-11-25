@@ -27,7 +27,7 @@ public class Coordinate {
 	}
 
 	@Override
-	public String toString(){
+	public String toString() {
 		return "Row: " + getRow() + " Col: " + getColumn();
 	}
 }
