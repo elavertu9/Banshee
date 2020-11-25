@@ -18,6 +18,8 @@ public class Game implements Serializable {
 
     @Id
     private UUID gameId;
+    private User player1;
+    private User player2;
     private GameBoard gameBoard;
     private GameStats gameStats;
     private RuleEnforcer ruleEnforcer;
@@ -28,6 +30,8 @@ public class Game implements Serializable {
 
     public Game(UUID gameId, User player1, User player2) {
         this.gameId = gameId;
+        this.player1 = player1;
+        this.player2 = player2;
         this.gameStats = new GameStats(player1, player2);
         this.gameBoard = new GameBoard();
         this.ruleEnforcer = new RuleEnforcer(this);
@@ -92,6 +96,14 @@ public class Game implements Serializable {
         }
     }
 
+    public User getPlayer1() {
+        return player1;
+    }
+
+    public User getPlayer2() {
+        return player2;
+    }
+
     public GameBoard getGameBoard() {
         return gameBoard;
     }
@@ -102,6 +114,6 @@ public class Game implements Serializable {
 
     @Override
     public String toString() {
-        return gameStats.getPlayer1().getName() + " - " + gameStats.getPlayer1Color() + "\n" + gameStats.getPlayer2().getName() + " - " + gameStats.getPlayer2Color() + "\n" + gameBoard.toString();
+        return player1.getName() + " - " + gameStats.getPlayer1Color() + "\n" + player2.getName() + " - " + gameStats.getPlayer2Color() + "\n" + gameBoard.toString();
     }
 }

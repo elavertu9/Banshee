@@ -65,14 +65,6 @@ public class GameStats {
         }
     }
 
-    public User getPlayer1() {
-        return player1;
-    }
-
-    public User getPlayer2() {
-        return player2;
-    }
-
     public Color getPlayer1Color() {
         return player1Color;
     }
