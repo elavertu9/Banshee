@@ -157,7 +157,11 @@ public class GameBoard {
 			}
 			boardString += "\n";
 		}
-		boardString += "- - - - - - - - - - - - - - - - -\n";
+
+		for(int i = 0; i < COLS+1; i++) {
+			boardString += ("-\t\t");
+		}
+		boardString += "\n";
 		return boardString;
 	}
 
