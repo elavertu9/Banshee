@@ -1,7 +1,6 @@
 package dev.lavertu.banshee.game;
 
 import dev.lavertu.banshee.game.pieces.*;
-
 import java.util.Stack;
 import java.util.Collections;
 
