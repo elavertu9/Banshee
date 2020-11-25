@@ -11,12 +11,20 @@ public class RuleEnforcer {
         this.gameBoard = gameboard;
     }
 
-    public boolean isValidCapture(Move move) throws CoordinateOutOfBoundsException, IllegalCaptureException {
+    public boolean isValidCapture(Move move) throws CoordinateOutOfBoundsException, IllegalCaptureException, CaptureEmptySpaceException, SameColorException {
         if(coordinatesInBounds(move)) {
-            if( (!isSameColor(move)) && (!isSameCoordinate(move.getFrom(), move.getTo())) && (areFaceUp(move)) && (!isEmptySpace(move.getFrom()) && !isEmptySpace(move.getTo())) && (!isGeneralCapturingSoldier(move)) && ((isSoldierCapturingGeneral(move)) || (canCapture(move))) ) {
-                return true;
+            if(!isPieceToEmpty(move)) {
+                if(!isSameColor(move)) {
+                    if((!isSameCoordinate(move.getFrom(), move.getTo())) && (areFaceUp(move)) && (!isEmptySpace(move.getFrom()) && !isEmptySpace(move.getTo())) && (!isGeneralCapturingSoldier(move)) && ((isSoldierCapturingGeneral(move)) || (canCapture(move))) ) {
+                        return true;
+                    } else {
+                        throw new IllegalCaptureException();
+                    }
+                } else {
+                    throw new SameColorException();
+                }
             } else {
-                throw new IllegalCaptureException();
+                throw new CaptureEmptySpaceException();
             }
         } else {
             throw new CoordinateOutOfBoundsException();
@@ -49,12 +57,12 @@ public class RuleEnforcer {
     }
 
     private boolean coordinatesInBounds(Move move) {
-        return (move.getFrom().getRow() < 4 && move.getFrom().getRow() >= 0) && (move.getFrom().getColumn() < 8 && move.getFrom().getColumn() >= 0) && (move.getTo().getRow() < 4 && move.getTo().getRow() >= 0) && (move.getTo().getColumn() < 8 && move.getTo().getColumn() >= 0);
+        return (move.getFrom().getRow() < gameBoard.getRows() && move.getFrom().getRow() >= 0) && (move.getFrom().getColumn() < gameBoard.getCols() && move.getFrom().getColumn() >= 0) && (move.getTo().getRow() < gameBoard.getRows() && move.getTo().getRow() >= 0) && (move.getTo().getColumn() < gameBoard.getCols() && move.getTo().getColumn() >= 0);
     }
 
     public boolean isPieceToEmpty(Move move) {
         // piece can travel to empty
-        return gameBoard.pieceAt(move.getFrom()).getRank() > 0 && gameBoard.pieceAt(move.getTo()).getRank() == 0;
+        return (gameBoard.pieceAt(move.getFrom()).getRank() > 0) && (isEmptySpace(move.getTo()));
     }
 
     private boolean isSameCoordinate(Coordinate fromCoordinate, Coordinate toCoordinate) {
