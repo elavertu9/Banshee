@@ -1,5 +1,8 @@
-package dev.lavertu.banshee.game;
+package dev.lavertu.banshee;
 
+import dev.lavertu.banshee.game.Game;
+import dev.lavertu.banshee.user.Player;
+import dev.lavertu.banshee.utils.ServerCommandParser;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
