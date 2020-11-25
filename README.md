@@ -32,8 +32,10 @@ Banshee is built using Java, Maven, Swift
     * [SonarLint](https://www.sonarlint.org/intellij)
 
 ## Installation
-1. Clone repository
-2. More coming soon
+1. In Intellij File > New Project > From Version Control
+2. Choose HTTPS and paste in the repository link
+3. Leave defaults and continue through
+4. Refresh Maven imports and run Maven install from the Maven tab
 
 ## GitHub Work Flow
 1. Clone repository using HTTPS
@@ -70,7 +72,16 @@ git merge master
 ```
 
 ## Usage
-1. Coming soon
+After Installation...
+1. Comment out commandParserTesting() and uncomment SpringApplication.run(Main.class, args) for localhost:8080 API
+2. Comment out SpringApplication.run(Main.class, args) and uncomment commandParserTesting() for local terminal testing
+
+```java 
+public static void main(String[] args) {
+        //commandParserTesting();
+        SpringApplication.run(Main.class, args);
+}
+```
 
 ## License
 No license yet
