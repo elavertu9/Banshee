@@ -1,12 +1,12 @@
 package dev.lavertu.banshee.user;
 
-public class PlayerStats {
+public class UserStats {
 
     private int wins;
     private int loses;
     private int gamesPlayed;
 
-    public PlayerStats() {
+    public UserStats() {
         // Can make DB calls once configured
         this.wins = 0;
         this.loses = 0;

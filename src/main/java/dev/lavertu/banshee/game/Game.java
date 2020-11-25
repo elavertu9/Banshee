@@ -1,18 +1,35 @@
 package dev.lavertu.banshee.game;
 
 import dev.lavertu.banshee.exception.*;
-import dev.lavertu.banshee.user.Player;
+import dev.lavertu.banshee.user.User;
 
-public class Game {
+import javax.annotation.Generated;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.io.Serializable;
+import java.util.UUID;
 
-    private String gameId;
-    private Player player1;
-    private Player player2;
+
+@Entity
+@Table(name = "Game")
+public class Game implements Serializable {
+
+    @Id
+    private UUID gameId;
+    private User player1;
+    private User player2;
     private GameBoard gameBoard;
     private GameStats gameStats;
     private RuleEnforcer ruleEnforcer;
 
-    public Game(Player player1, Player player2) {
+    public Game(User player1, User player2) {
+        this(UUID.randomUUID(), player1, player2);
+    }
+
+    public Game(UUID gameId, User player1, User player2) {
+        this.gameId = gameId;
         this.player1 = player1;
         this.player2 = player2;
         this.gameStats = new GameStats(player1, player2);
@@ -79,11 +96,11 @@ public class Game {
         }
     }
 
-    public Player getPlayer1() {
+    public User getPlayer1() {
         return player1;
     }
 
-    public Player getPlayer2() {
+    public User getPlayer2() {
         return player2;
     }
 

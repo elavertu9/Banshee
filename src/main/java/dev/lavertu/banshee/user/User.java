@@ -4,17 +4,17 @@ import dev.lavertu.banshee.game.pieces.iPiece;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class Player {
+public class User {
 
     private String name;
     private String playerId;
     private ArrayList<iPiece> myPieces;
-    private PlayerStats playerStats;
+    private UserStats playerStats;
 
-    public Player(String name) {
+    public User(String name) {
         this.name = name;
         this.playerId = UUID.randomUUID().toString(); // temporary until DB
-        this.playerStats = new PlayerStats();
+        this.playerStats = new UserStats();
     }
 
     public String getName() {

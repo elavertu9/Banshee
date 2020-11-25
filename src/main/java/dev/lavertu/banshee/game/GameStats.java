@@ -3,28 +3,28 @@ package dev.lavertu.banshee.game;
 import dev.lavertu.banshee.exception.GameDoesNotContainUserException;
 import dev.lavertu.banshee.exception.IllegalForfeitException;
 import dev.lavertu.banshee.exception.IllegalGameOverException;
-import dev.lavertu.banshee.user.Player;
+import dev.lavertu.banshee.user.User;
 
 public class GameStats {
 
-    private Player player1;
-    private Player player2;
+    private User player1;
+    private User player2;
     private Color player1Color = Color.BLACK;
     private Color player2Color = Color.WHITE;
     private boolean gameOver = false;
     private boolean forfeited = false;
-    private Player winner;
-    private Player loser;
-    private Player forfeitPlayer;
-    private Player turn;
+    private User winner;
+    private User loser;
+    private User forfeitPlayer;
+    private User turn;
 
-    public GameStats(Player player1, Player player2) {
+    public GameStats(User player1, User player2) {
         this.player1 = player1;
         this.player2 = player2;
         this.turn = player1;
     }
 
-    public void gameOver(Player gameWinner) throws IllegalGameOverException {
+    public void gameOver(User gameWinner) throws IllegalGameOverException {
         try {
             this.gameOver = true;
             winner = gameWinner;
@@ -37,7 +37,7 @@ public class GameStats {
         }
     }
 
-    public void forfeitGame(Player gameWinner) throws IllegalForfeitException {
+    public void forfeitGame(User gameWinner) throws IllegalForfeitException {
         try {
             this.gameOver = true;
             forfeited = true;
@@ -54,7 +54,7 @@ public class GameStats {
         }
     }
 
-    private Player whoLost(Player gameWinner) throws GameDoesNotContainUserException {
+    private User whoLost(User gameWinner) throws GameDoesNotContainUserException {
         String winnerId = gameWinner.getPlayerId();
         if(winnerId.equals(player1.getPlayerId())) {
             return player2;
@@ -81,19 +81,19 @@ public class GameStats {
         return forfeited;
     }
 
-    public Player getWinner() {
+    public User getWinner() {
         return winner;
     }
 
-    public Player getLoser() {
+    public User getLoser() {
         return loser;
     }
 
-    public Player getForfeitPlayer() {
+    public User getForfeitPlayer() {
         return forfeitPlayer;
     }
 
-    public Player getTurn() {
+    public User getTurn() {
         return turn;
     }
 }
