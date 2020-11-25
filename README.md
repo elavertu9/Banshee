@@ -29,6 +29,7 @@ Banshee is built using Java, Maven, Swift
 * [ZenHub](https://app.zenhub.com/workspaces/devlavertubanshee-5fa9919c85fdee000efdb4c0/board?repos=310688472)
 * [LucidChart](https://lucid.app/invitations/accept/f3095299-7a80-47d4-8338-031f6f34854b)
 * [Intellij](https://www.jetbrains.com/idea/)
+    * [SonarLint](https://www.sonarlint.org/intellij)
 
 ## Installation
 1. Clone repository

@@ -39,7 +39,6 @@ public class Game {
             e.printStackTrace();
             throw new IllegalMoveException();
         }
-
     }
 
     private void performCapture(Move move) throws CaptureException {

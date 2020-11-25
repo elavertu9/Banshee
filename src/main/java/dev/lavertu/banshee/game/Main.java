@@ -8,8 +8,7 @@ public class Main
     }
 
     // This class is for testing purposes
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         Player player1 = new Player("Evan");
         Player player2 = new Player("Paul");
 
