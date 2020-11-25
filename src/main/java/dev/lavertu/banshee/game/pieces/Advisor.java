@@ -50,8 +50,13 @@ public class Advisor implements iPiece {
 	}
 
 	@Override
+	public String getPieceName() {
+		return "Advisor";
+	}
+
+	@Override
 	public String toString() {
-		return "";
+		return getPieceName() + "(" + RANK + ")\n\tColor: " + color + "\n\tisCaptured: " + isCaptured + "\n\tisFaceUp: " + isFaceUp + "\n";
 	}
 
 	@Override

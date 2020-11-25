@@ -50,8 +50,13 @@ public class Chariot implements iPiece {
 	}
 
 	@Override
+	public String getPieceName() {
+		return "Chariot";
+	}
+
+	@Override
 	public String toString() {
-		return "";
+		return getPieceName() + "(" + RANK + ")\n\tColor: " + color + "\n\tisCaptured: " + isCaptured + "\n\tisFaceUp: " + isFaceUp + "\n";
 	}
 
 	@Override

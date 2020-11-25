@@ -18,6 +18,8 @@ public interface iPiece extends Comparable<iPiece> {
 
 	public boolean getIsFaceUp();
 
+	public String getPieceName();
+
 	public String toString();
 
 	public int compareTo(iPiece piece);
