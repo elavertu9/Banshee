@@ -45,6 +45,7 @@ public class EmptyPiece implements iPiece {
 		return isFaceUp;
 	}
 
+	@Override
 	public String toString() {
 		return "";
 	}

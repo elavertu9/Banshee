@@ -1,9 +1,6 @@
 package dev.lavertu.banshee.game;
 
-import dev.lavertu.banshee.exception.CoordinateOutOfBoundsException;
-import dev.lavertu.banshee.exception.IllegalCaptureException;
-import dev.lavertu.banshee.exception.PieceFaceUpException;
-import dev.lavertu.banshee.exception.SpaceOccupiedException;
+import dev.lavertu.banshee.exception.*;
 import dev.lavertu.banshee.game.pieces.iPiece;
 
 public class RuleEnforcer {

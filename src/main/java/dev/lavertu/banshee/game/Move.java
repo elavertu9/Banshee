@@ -24,6 +24,7 @@ public class Move {
 		return moveType;
 	}
 
+	@Override
 	public String toString() {
 		return moveType + ": from (" + from.getRow() + ", "
 				+ from.getColumn() + ") to (" + to.getRow() + ", "
