@@ -6,11 +6,13 @@ import dev.lavertu.banshee.utils.ServerCommandParser;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+@RequestMapping("/api")
 public class GameApi {
 
-    @GetMapping("/api/hello")
+    @GetMapping("/hello")
     public String sayHello(@RequestParam(value = "myName", defaultValue = "") String name) {
         return String.format("Hello %s! The Banshee Server is up and running", name);
     }
