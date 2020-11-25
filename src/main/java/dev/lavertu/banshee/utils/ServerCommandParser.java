@@ -2,7 +2,6 @@ package dev.lavertu.banshee.utils;
 
 import dev.lavertu.banshee.exception.IllegalMoveException;
 import dev.lavertu.banshee.game.*;
-
 import java.util.Scanner;
 
 public class ServerCommandParser {
