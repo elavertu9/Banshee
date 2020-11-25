@@ -72,7 +72,7 @@ git merge master
 ```
 
 ## Usage
-After Installation...
+After installation, inside Main.java...
 1. Comment out commandParserTesting() and uncomment SpringApplication.run(Main.class, args) for localhost:8080 API
 2. Comment out SpringApplication.run(Main.class, args) and uncomment commandParserTesting() for local terminal testing
 
@@ -82,6 +82,12 @@ public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
 }
 ```
+### Command Parser
+* help
+* flip <row,col>
+* capture <from.row,from.col> <to.row,to.col>
+* travel <from.row,from.col> <to.row,to.col>
+* allflip
 
 ## License
 No license yet
