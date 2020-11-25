@@ -3,7 +3,7 @@ package dev.lavertu.banshee;
 import dev.lavertu.banshee.game.Game;
 import dev.lavertu.banshee.user.Player;
 import dev.lavertu.banshee.utils.ServerCommandParser;
-import org.springframework.boot.SpringApplication;
+import org.springframework.boot.SpringApplication; // Do not delete even if not used
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,15 +17,15 @@ public class Main
         Player player1 = new Player("Player 1");
         Player player2 = new Player("Player 2");
         Game game = new Game(player1, player2);
-        System.out.println(game.printGameBoard());
+        System.out.println(game.toString());
         ServerCommandParser commandParser = new ServerCommandParser(game);
         commandParser.listen();
     }
 
     // This class is for testing purposes
     public static void main(String[] args) {
-        commandParserTesting();
-        //SpringApplication.run(Main.class, args);
+        //commandParserTesting();
+        SpringApplication.run(Main.class, args);
     }
 
     @GetMapping("/api/hello")

@@ -20,7 +20,7 @@ public class ServerCommandParser {
             try {
                 input = parser.nextLine();
                 handleInput(input);
-                System.out.println(game.printGameBoard());
+                System.out.println(game.toString());
             }catch(Exception e) {
                 e.printStackTrace();
             }
