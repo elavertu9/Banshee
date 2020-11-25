@@ -12,11 +12,11 @@ import java.io.Serializable;
 import java.util.UUID;
 
 
-@Entity
-@Table(name = "Game")
+//@Entity
+//@Table(name = "Game")
 public class Game implements Serializable {
 
-    @Id
+//    @Id
     private UUID gameId;
     private User player1;
     private User player2;
