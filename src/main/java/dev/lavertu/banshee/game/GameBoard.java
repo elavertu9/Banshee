@@ -129,6 +129,14 @@ public class GameBoard {
 		return piece;
 	}
 
+	public int getCols() {
+		return COLS;
+	}
+
+	public int getRows() {
+		return ROWS;
+	}
+
 	@Override
 	public String toString(){
 		String boardString = "- ";

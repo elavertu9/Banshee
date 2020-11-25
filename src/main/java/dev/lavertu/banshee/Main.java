@@ -24,8 +24,8 @@ public class Main
 
     // This class is for testing purposes
     public static void main(String[] args) {
-        //commandParserTesting();
-        SpringApplication.run(Main.class, args);
+        commandParserTesting();
+        //SpringApplication.run(Main.class, args);
     }
 
     @GetMapping("/api/hello")

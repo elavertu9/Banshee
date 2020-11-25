@@ -48,7 +48,7 @@ public class Game {
                 gameBoard.removePiece(move.getTo());
                 gameBoard.swapPieces(move.getFrom(), move.getTo());
             }
-        } catch(CoordinateOutOfBoundsException | IllegalCaptureException e) {
+        } catch(CoordinateOutOfBoundsException | IllegalCaptureException | CaptureEmptySpaceException | SameColorException e) {
             e.printStackTrace();
             throw new CaptureException();
         }
