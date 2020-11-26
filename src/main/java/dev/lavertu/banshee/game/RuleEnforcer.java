@@ -11,21 +11,25 @@ public class RuleEnforcer {
         this.game = game;
     }
 
-    public boolean isValidCapture(Move move) throws CoordinateOutOfBoundsException, IllegalCaptureException, CaptureEmptySpaceException, SameColorException, GameOverException {
+    public boolean isValidCapture(Move move) throws CoordinateOutOfBoundsException, IllegalCaptureException, CaptureEmptySpaceException, SameColorException, GameOverException, IllegalHopException {
         if(!game.getGameStats().isGameOver()) {
             if(coordinatesInBounds(move)) {
-                if(!isPieceToEmpty(move)) {
-                    if(!isSameColor(move)) {
-                        if((!isSameCoordinate(move.getFrom(), move.getTo())) && (areFaceUp(move)) && (!isEmptySpace(move.getFrom()) && !isEmptySpace(move.getTo())) && (!isGeneralCapturingSoldier(move)) && ((isSoldierCapturingGeneral(move)) || (canCapture(move))) ) {
-                            return true;
+                if(isValidHop(move)) {
+                    if(!isPieceToEmpty(move)) {
+                        if(!isSameColor(move)) {
+                            if((!isSameCoordinate(move.getFrom(), move.getTo())) && (areFaceUp(move)) && (!isEmptySpace(move.getFrom()) && !isEmptySpace(move.getTo())) && (!isGeneralCapturingSoldier(move)) && ((isSoldierCapturingGeneral(move)) || (canCapture(move))) ) {
+                                return true;
+                            } else {
+                                throw new IllegalCaptureException();
+                            }
                         } else {
-                            throw new IllegalCaptureException();
+                            throw new SameColorException();
                         }
                     } else {
-                        throw new SameColorException();
+                        throw new CaptureEmptySpaceException();
                     }
                 } else {
-                    throw new CaptureEmptySpaceException();
+                    throw new IllegalHopException();
                 }
             } else {
                 throw new CoordinateOutOfBoundsException();
@@ -36,13 +40,17 @@ public class RuleEnforcer {
 
     }
 
-    public boolean isValidTravel(Move move) throws CoordinateOutOfBoundsException, SpaceOccupiedException, GameOverException {
+    public boolean isValidTravel(Move move) throws CoordinateOutOfBoundsException, SpaceOccupiedException, GameOverException, IllegalHopException {
         if(!game.getGameStats().isGameOver()) {
             if(coordinatesInBounds(move)) {
-                if(isPieceToEmpty(move)) {
-                    return true;
+                if(isValidHop(move)) {
+                    if(isPieceToEmpty(move)) {
+                        return true;
+                    } else {
+                        throw new SpaceOccupiedException();
+                    }
                 } else {
-                    throw new SpaceOccupiedException();
+                    throw new IllegalHopException();
                 }
             } else {
                 throw new CoordinateOutOfBoundsException();
@@ -108,23 +116,21 @@ public class RuleEnforcer {
         return game.getGameBoard().pieceAt(move.getFrom()).compareTo(game.getGameBoard().pieceAt(move.getTo())) >= 0;
     }
 
-    /*private boolean restrictToSingleSpace() {
-
+    private boolean isValidHop(Move move) {
+        int horizontalDelta = move.getFrom().getRow() > move.getTo().getRow() ? move.getFrom().getRow() - move.getTo().getRow() : move.getTo().getRow() - move.getFrom().getRow();
+        int verticalDelta = move.getFrom().getColumn() > move.getTo().getColumn() ? move.getFrom().getColumn() - move.getTo().getColumn() : move.getTo().getColumn() - move.getFrom().getColumn();
+        if((horizontalDelta != verticalDelta) && (horizontalDelta == 1 || verticalDelta == 1)) {
+            return isVertical(move) || isHorizontal(move);
+        } else {
+            return false;
+        }
     }
 
-    private boolean restrictUp() {
-
+    private boolean isVertical(Move move) {
+        return move.getFrom().getColumn() == move.getTo().getColumn();
     }
 
-    private boolean restrictDown() {
-
+    private boolean isHorizontal(Move move) {
+        return move.getFrom().getRow() == move.getTo().getRow();
     }
-
-    private boolean restrictRight() {
-
-    }
-
-    private boolean restrictLeft() {
-
-    }*/
 }
