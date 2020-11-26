@@ -10,36 +10,40 @@ import java.util.Date;
 import java.util.UUID;
 
 
-//@Entity
-//@Table(name = "Game")
+@Entity
+@Table(name = "games", schema = "public")
 public class Game implements Serializable {
 
-//    @Id
+    @Id
+    @Column(name = "game_id")
     private UUID gameId;
-//
-//    @Column(name = "game_object")
-//    private String[] game_object;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "player1_id")
-    private User player1;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "player2_id")
-    private User player2;
-//
-//    @CreationTimestamp
-//    @Temporal(TemporalType.TIMESTAMP)
-//    @Column(name = "create_date")
-//    private Date createDate;
-//
-//    @CreationTimestamp
-//    @Temporal(TemporalType.TIMESTAMP)
-//    @Column(name = "update_date")
-//    private Date updateDate;
 
+    @Column(name = "game_object")
+    private String[] game_object;
+
+    @ManyToOne
+    @JoinColumn(name = "player1_id")
+    private User player1;
+
+    @ManyToOne
+    @JoinColumn(name = "player2_id")
+    private User player2;
+
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "create_date")
+    private Date createDate;
+
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "update_date")
+    private Date updateDate;
+
+    @Transient
     private GameBoard gameBoard;
+    @Transient
     private GameStats gameStats;
+    @Transient
     private RuleEnforcer ruleEnforcer;
 
     public Game(User player1, User player2) {

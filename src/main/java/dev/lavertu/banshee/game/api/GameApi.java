@@ -2,6 +2,7 @@ package dev.lavertu.banshee.game.api;
 
 import dev.lavertu.banshee.exception.api.UsernameNotFoundException;
 import dev.lavertu.banshee.game.Game;
+import dev.lavertu.banshee.services.GamesService;
 import dev.lavertu.banshee.services.UsersService;
 import dev.lavertu.banshee.user.User;
 import org.apache.logging.log4j.LogManager;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 
 @RequestMapping("/api")
 @RestController
@@ -21,10 +24,16 @@ public class GameApi {
     private static final Logger LOGGER = LogManager.getLogger(GameApi.class);
 
     UsersService usersService;
+    GamesService gamesService;
 
     @Autowired
-    public void setUserService(UsersService usersService){
+    public void setUserService(UsersService usersService) {
         this.usersService = usersService;
+    }
+
+    @Autowired
+    public void setGamesService(GamesService gamesService) {
+        this.gamesService = gamesService;
     }
 
     @GetMapping("/hello")
@@ -47,5 +56,11 @@ public class GameApi {
         }
         Game game = new Game(player1, player2);
         return ResponseEntity.accepted().body(game.toString());
+    }
+
+    @GetMapping(value = "/allgames", produces = "application/Json")
+    public ResponseEntity<List<Game>> getAllGames() {
+        List<Game> gameList = gamesService.getAllGames();
+        return ResponseEntity.ok().body(gameList);
     }
 }

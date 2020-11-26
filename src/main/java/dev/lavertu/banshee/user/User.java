@@ -49,9 +49,10 @@ public class User implements Serializable {
     @Column(name = "update_date")
     private Date updateDate;
 
-    // TODO - these need to be added to DB model to work
-//    private ArrayList<iPiece> myPieces;
-//    private UserStats userStats;
+    @Transient
+    private ArrayList<iPiece> myPieces;
+    @Transient
+    private UserStats userStats;
 
     public User(){}
 

@@ -1,20 +1,31 @@
-//package dev.lavertu.banshee.repository;
-//
-//import dev.lavertu.banshee.game.Game;
-//import org.springframework.data.jpa.repository.JpaRepository;
-//import org.springframework.data.jpa.repository.Query;
-//import org.springframework.data.repository.query.Param;
-//import org.springframework.stereotype.Repository;
-//
-//import java.util.UUID;
-//
-//@Repository
-//public interface GamesRepository extends JpaRepository<GamesRepository, UUID> {
-//
-//    @Query(
-//            "SELECT g " +
-//            "FROM games g " +
-//            "WHERE LOWER(g.game_id) = LOWER(:username)"
-//    )
-//    Game getGameById(@Param("gameId") String gameId);
-//}
+package dev.lavertu.banshee.repository;
+
+import dev.lavertu.banshee.game.Game;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Repository;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
+import java.util.List;
+
+@Transactional
+@Repository
+public class GamesRepository {
+    private static final Logger LOGGER = LogManager.getLogger(GamesRepository.class);
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    public List<Game> getAllGames() {
+        String hql = "SELECT g FROM Game as g";
+        TypedQuery<Game> query = entityManager.createQuery(hql, Game.class);
+        return query.getResultList();
+    }
+
+    public void saveGame(Game game) {
+        entityManager.persist(game);
+    }
+}
