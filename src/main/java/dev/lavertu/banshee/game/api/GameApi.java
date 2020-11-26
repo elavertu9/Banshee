@@ -21,12 +21,12 @@ public class GameApi {
 
     @PostMapping(value = "/create")
     public ResponseEntity createGame(
-        @RequestParam String player1Username,
-        @RequestParam String player2Username
+        @RequestParam String user1Username,
+        @RequestParam String user2Username
     ) {
-        User player1 = new User(player1Username);
-        User player2 = new User(player2Username);
-        Game game = new Game(player1, player2);
+        User user1 = new User(user1Username);
+        User user2 = new User(user2Username);
+        Game game = new Game(user1, user2);
         return ResponseEntity.accepted().body(game.toString());
     }
 }

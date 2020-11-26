@@ -18,21 +18,21 @@ public class Game implements Serializable {
 
 //    @Id
     private UUID gameId;
-    private User player1;
-    private User player2;
+    private User user1;
+    private User user2;
     private GameBoard gameBoard;
     private GameStats gameStats;
     private RuleEnforcer ruleEnforcer;
 
-    public Game(User player1, User player2) {
-        this(UUID.randomUUID(), player1, player2);
+    public Game(User user1, User user2) {
+        this(UUID.randomUUID(), user1, user2);
     }
 
-    public Game(UUID gameId, User player1, User player2) {
+    public Game(UUID gameId, User user1, User user2) {
         this.gameId = gameId;
-        this.player1 = player1;
-        this.player2 = player2;
-        this.gameStats = new GameStats(player1, player2);
+        this.user1 = user1;
+        this.user2 = user2;
+        this.gameStats = new GameStats(user1, user2);
         this.gameBoard = new GameBoard();
         this.ruleEnforcer = new RuleEnforcer(this);
     }
@@ -96,12 +96,12 @@ public class Game implements Serializable {
         }
     }
 
-    public User getPlayer1() {
-        return player1;
+    public User getUser1() {
+        return user1;
     }
 
-    public User getPlayer2() {
-        return player2;
+    public User getUser2() {
+        return user2;
     }
 
     public GameBoard getGameBoard() {
@@ -114,6 +114,6 @@ public class Game implements Serializable {
 
     @Override
     public String toString() {
-        return player1.getName() + " - " + gameStats.getPlayer1Color() + "\n" + player2.getName() + " - " + gameStats.getPlayer2Color() + "\n" + gameBoard.toString();
+        return user1.getName() + " - " + gameStats.getUser1Color() + "\n" + user2.getName() + " - " + gameStats.getUser2Color() + "\n" + gameBoard.toString();
     }
 }

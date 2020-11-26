@@ -7,14 +7,14 @@ import java.util.UUID;
 public class User {
 
     private String name;
-    private String playerId;
+    private String userId;
     private ArrayList<iPiece> myPieces;
-    private UserStats playerStats;
+    private UserStats userStats;
 
     public User(String name) {
         this.name = name;
-        this.playerId = UUID.randomUUID().toString(); // temporary until DB
-        this.playerStats = new UserStats();
+        this.userId = UUID.randomUUID().toString(); // temporary until DB
+        this.userStats = new UserStats();
     }
 
     public String getName() {
@@ -25,12 +25,12 @@ public class User {
         return myPieces;
     }
 
-    public String getPlayerId() {
-        return playerId;
+    public String getUserId() {
+        return userId;
     }
 
     @Override
     public String toString() {
-        return "Player: \n\t" + playerId + "\n\t" + name;
+        return "User: \n\t" + userId + "\n\t" + name;
     }
 }

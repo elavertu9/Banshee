@@ -7,12 +7,12 @@ import org.springframework.boot.SpringApplication; // Do not delete even if not 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Main
-{
+public class Main {
+
     public static void commandParserTesting() {
-        User player1 = new User("Player 1");
-        User player2 = new User("Player 2");
-        Game game = new Game(player1, player2);
+        User user1 = new User("User 1");
+        User user2 = new User("User 2");
+        Game game = new Game(user1, user2);
         System.out.println(game.toString());
         ServerCommandParser commandParser = new ServerCommandParser(game);
         commandParser.listen();

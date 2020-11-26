@@ -7,21 +7,21 @@ import dev.lavertu.banshee.user.User;
 
 public class GameStats {
 
-    private User player1;
-    private User player2;
-    private Color player1Color = Color.BLACK;
-    private Color player2Color = Color.WHITE;
+    private User user1;
+    private User user2;
+    private Color user1Color = Color.BLACK;
+    private Color user2Color = Color.WHITE;
     private boolean gameOver = false;
     private boolean forfeited = false;
     private User winner;
     private User loser;
-    private User forfeitPlayer;
+    private User forfeitUser;
     private User turn;
 
-    public GameStats(User player1, User player2) {
-        this.player1 = player1;
-        this.player2 = player2;
-        this.turn = player1;
+    public GameStats(User user1, User user2) {
+        this.user1 = user1;
+        this.user2 = user2;
+        this.turn = user1;
     }
 
     public void gameOver(User gameWinner) throws IllegalGameOverException {
@@ -43,11 +43,11 @@ public class GameStats {
             forfeited = true;
             winner = gameWinner;
             loser = whoLost(gameWinner);
-            forfeitPlayer = whoLost(gameWinner);
+            forfeitUser = whoLost(gameWinner);
         } catch(GameDoesNotContainUserException e) {
             gameOver = false;
             winner = null;
-            forfeitPlayer = null;
+            forfeitUser = null;
             forfeited = false;
             e.printStackTrace();
             throw new IllegalForfeitException();
@@ -55,22 +55,22 @@ public class GameStats {
     }
 
     private User whoLost(User gameWinner) throws GameDoesNotContainUserException {
-        String winnerId = gameWinner.getPlayerId();
-        if(winnerId.equals(player1.getPlayerId())) {
-            return player2;
-        } else if(winnerId.equals(player2.getPlayerId())) {
-            return player1;
+        String winnerId = gameWinner.getUserId();
+        if(winnerId.equals(user1.getUserId())) {
+            return user2;
+        } else if(winnerId.equals(user2.getUserId())) {
+            return user1;
         } else {
             throw new GameDoesNotContainUserException();
         }
     }
 
-    public Color getPlayer1Color() {
-        return player1Color;
+    public Color getUser1Color() {
+        return user1Color;
     }
 
-    public Color getPlayer2Color() {
-        return player2Color;
+    public Color getUser2Color() {
+        return user2Color;
     }
 
     public boolean isGameOver() {
@@ -89,8 +89,8 @@ public class GameStats {
         return loser;
     }
 
-    public User getForfeitPlayer() {
-        return forfeitPlayer;
+    public User getForfeitUser() {
+        return forfeitUser;
     }
 
     public User getTurn() {
