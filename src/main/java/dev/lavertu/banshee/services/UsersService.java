@@ -22,12 +22,6 @@ public class UsersService {
     @Autowired
     private UsersRepository usersRepository;
 
-//    public User createUser(String username, String firstName, String lastName, String emailAddress) {
-//        User user = new User(UUID.randomUUID(), username, firstName, lastName, emailAddress);
-//        usersRepository.saveUser(user);
-//        return user;
-//    }
-
     public User createUser(User user) throws UsernameAlreadyExistsException, EmailAddressAlreadyExistsException {
         String username = user.getUsername();
         String emailAddress = user.getEmailAddress();

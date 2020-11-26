@@ -30,47 +30,16 @@ public class UserApi {
         this.usersService = usersService;
     }
 
-    // TODO - Make input an update object, instead of list of params
     @PostMapping(value = "/create", consumes = "application/json", produces = "application/json")
     public ResponseEntity<User> createUser(@Valid @RequestBody User userInput) throws EmailAddressAlreadyExistsException, UsernameAlreadyExistsException {
         User user = usersService.createUser(userInput);
         return ResponseEntity.ok().body(user);
-//        String username = userInput.getUsername();
-//        String emailAddress = userInput.getEmailAddress();
-//        String firstName = userInput.getFirstName();
-//        String lastName = userInput.getLastName();
-//        User user = usersService.getUserByUsernameOrEmail(username, emailAddress);
-//        if (user != null) {
-//            if (user.getUsername().equals(username)) {
-//                throw new UsernameAlreadyExistsException("Username " + username + " already taken. Please try another.");
-//            }
-//            if (user.getEmailAddress().equals(emailAddress)) {
-//                throw new EmailAddressAlreadyExistsException("Email " + emailAddress + " already taken. Please try another.");
-//            }
-//        }
-//        user = usersService.createUser(username, firstName, lastName, emailAddress);
-//        return ResponseEntity.ok().body(user);
     }
 
-    // TODO - Make input an update object, instead of list of params
     @PutMapping(value = "/update/{userId}", produces = "application/Json")
     public ResponseEntity<User> updateUser(@PathVariable UUID userId, @RequestBody User userInput) {
         User user = usersService.updateUser(userId, userInput);
         return ResponseEntity.ok().body(user);
-//        String firstName = userInput.getFirstName();
-//        String lastName = userInput.getLastName();
-//        String emailAddress = userInput.getEmailAddress();
-//        User user = usersService.getUserByUserId(userId);
-//        if (firstName != null && !user.getFirstName().equals(firstName)) {
-//            user.setFirstName(firstName);
-//        }
-//        if (lastName != null && !user.getLastName().equals(lastName)) {
-//            user.setLastName(lastName);
-//        }
-//        if (emailAddress != null && !user.getEmailAddress().equals(emailAddress)) {
-//            user.setEmailAddress(emailAddress);
-//        }
-//        return ResponseEntity.ok().body(user);
     }
 
     @GetMapping(value = "/allusers", produces = "application/Json")
