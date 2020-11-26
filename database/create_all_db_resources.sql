@@ -20,22 +20,29 @@ COMMENT ON DATABASE "Banshee" IS 'Stores all data needed for the Banshee applica
 \c Banshee
 
 -- Create superuser user
-CREATE ROLE banshee_owner WITH LOGIN PASSWORD 'password';
--- GRANT rds_superuser to banshee_owner;
+CREATE ROLE banshee_owner WITH LOGIN PASSWORD $1;
 ALTER USER banshee_owner WITH SUPERUSER;
 
 -- Create readonly user
-CREATE ROLE read_only WITH LOGIN PASSWORD 'password';
+CREATE ROLE read_only with LOGIN PASSWORD $2;
 GRANT CONNECT ON DATABASE "Banshee" TO read_only;
 GRANT USAGE ON SCHEMA public TO read_only;
 GRANT SELECT ON ALL TABLES IN SCHEMA public TO read_only;
 GRANT SELECT ON ALL SEQUENCES IN SCHEMA public TO read_only;
 
+-- Add UUID extension
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 -- Create users table
 CREATE TABLE public.users
 (
     user_id uuid NOT NULL PRIMARY KEY,
-    username text NOT NULL
+    username text NOT NULL,
+    first_name text NOT NULl,
+    last_name text NOT NULL,
+    email_address text NOT NULL,
+    create_date timestamp with time zone NOT NULL,
+    update_date timestamp with time zone NOT NULL
 );
 ALTER TABLE public.users OWNER to postgres;
 COMMENT ON TABLE public.users IS 'Keeps track of Banshee users';
@@ -44,18 +51,18 @@ COMMENT ON TABLE public.users IS 'Keeps track of Banshee users';
 CREATE TABLE public.games
 (
     game_id uuid NOT NULL PRIMARY KEY,
-    game_object text[] NOT NULL,
-    player1_id uuid NOT NULL,
-    player2_id uuid NOT NULL,
+    game_object text[],
     finished boolean NOT NULL,
     create_date timestamp with time zone NOT NULL,
     update_date timestamp with time zone NOT NULL,
-    CONSTRAINT player1_id_fk FOREIGN KEY (player1_id)
-        REFERENCES public.users (user_id) MATCH SIMPLE
-           ON UPDATE NO ACTION ON DELETE CASCADE,
-    CONSTRAINT player2_id_fk FOREIGN KEY (player2_id)
-        REFERENCES public.users (user_id) MATCH SIMPLE
-        ON UPDATE NO ACTION ON DELETE CASCADE
+    player1_id uuid NOT NULL REFERENCES users (user_id) ON UPDATE NO ACTION ON DELETE CASCADE,
+    player2_id uuid NOT NULL REFERENCES users (user_id) ON UPDATE NO ACTION ON DELETE CASCADE
 );
 ALTER TABLE public.games OWNER to postgres;
 COMMENT ON TABLE public.games IS 'Keeps track of Banshee games';
+
+-- Insert default Users records
+ INSERT INTO public.users(user_id, username, first_name, last_name, email_address, create_date, update_date)
+ 	VALUES (uuid_generate_v4(), 'Player1', 'Player', 'One', 'Player1@gmail.com', current_timestamp, current_timestamp);
+ INSERT INTO public.users(user_id, username, first_name, last_name, email_address, create_date, update_date)
+    VALUES (uuid_generate_v4(), 'Player2', 'Player', 'Two', 'Player2@gmail.com', current_timestamp, current_timestamp);
