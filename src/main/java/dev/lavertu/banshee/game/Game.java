@@ -2,24 +2,42 @@ package dev.lavertu.banshee.game;
 
 import dev.lavertu.banshee.exception.*;
 import dev.lavertu.banshee.user.User;
+import org.hibernate.annotations.CreationTimestamp;
 
-import javax.annotation.Generated;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.UUID;
 
 
-@Entity
-@Table(name = "Game")
+//@Entity
+//@Table(name = "Game")
 public class Game implements Serializable {
 
-    @Id
+//    @Id
     private UUID gameId;
+//
+//    @Column(name = "game_object")
+//    private String[] game_object;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "player1_id")
     private User player1;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "player2_id")
     private User player2;
+//
+//    @CreationTimestamp
+//    @Temporal(TemporalType.TIMESTAMP)
+//    @Column(name = "create_date")
+//    private Date createDate;
+//
+//    @CreationTimestamp
+//    @Temporal(TemporalType.TIMESTAMP)
+//    @Column(name = "update_date")
+//    private Date updateDate;
+
     private GameBoard gameBoard;
     private GameStats gameStats;
     private RuleEnforcer ruleEnforcer;
@@ -114,6 +132,6 @@ public class Game implements Serializable {
 
     @Override
     public String toString() {
-        return player1.getName() + " - " + gameStats.getPlayer1Color() + "\n" + player2.getName() + " - " + gameStats.getPlayer2Color() + "\n" + gameBoard.toString();
+        return player1.getUsername() + " - " + gameStats.getPlayer1Color() + "\n" + player2.getUsername() + " - " + gameStats.getPlayer2Color() + "\n" + gameBoard.toString();
     }
 }

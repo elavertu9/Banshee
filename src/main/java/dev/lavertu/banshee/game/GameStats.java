@@ -5,6 +5,8 @@ import dev.lavertu.banshee.exception.IllegalForfeitException;
 import dev.lavertu.banshee.exception.IllegalGameOverException;
 import dev.lavertu.banshee.user.User;
 
+import java.util.UUID;
+
 public class GameStats {
 
     private User player1;
@@ -55,10 +57,10 @@ public class GameStats {
     }
 
     private User whoLost(User gameWinner) throws GameDoesNotContainUserException {
-        String winnerId = gameWinner.getPlayerId();
-        if(winnerId.equals(player1.getPlayerId())) {
+        UUID winnerId = gameWinner.getUserId();
+        if(winnerId.equals(player1.getUserId())) {
             return player2;
-        } else if(winnerId.equals(player2.getPlayerId())) {
+        } else if(winnerId.equals(player2.getUserId())) {
             return player1;
         } else {
             throw new GameDoesNotContainUserException();
