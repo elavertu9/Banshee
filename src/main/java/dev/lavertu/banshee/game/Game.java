@@ -86,7 +86,7 @@ public class Game implements Serializable {
                 gameBoard.removePiece(move.getTo());
                 gameBoard.swapPieces(move.getFrom(), move.getTo());
             }
-        } catch(CoordinateOutOfBoundsException | IllegalCaptureException | CaptureEmptySpaceException | SameColorException | GameOverException e) {
+        } catch(CoordinateOutOfBoundsException | IllegalCaptureException | CaptureEmptySpaceException | SameColorException | GameOverException | IllegalHopException e) {
             e.printStackTrace();
             throw new CaptureException();
         }
@@ -97,7 +97,7 @@ public class Game implements Serializable {
             if(ruleEnforcer.isValidTravel(move)) {
                 gameBoard.swapPieces(move.getFrom(), move.getTo());
             }
-        } catch(CoordinateOutOfBoundsException | SpaceOccupiedException | GameOverException e) {
+        } catch(CoordinateOutOfBoundsException | SpaceOccupiedException | GameOverException | IllegalHopException e) {
             e.printStackTrace();
             throw new TravelException();
         }
