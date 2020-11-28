@@ -16,8 +16,8 @@
         2. **[Update User](#update-user---put-updateuserid)**
         3. **[Get All Users](#get-all-users---get-allusers)**
         4. **[Get User By UserId](#get-user-by-userid---get-iduserid)**
-        4. **[Get User By Username](#get-user-by-username---get-idusername)**
-        4. **[Get User By Email Address](#get-user-by-email-address---get-idemailaddress)**
+        5. **[Get User By Username](#get-user-by-username---get-idusername)**
+        6. **[Get User By Email Address](#get-user-by-email-address---get-idemailaddress)**
         
 
 ## GUI Endpoints
