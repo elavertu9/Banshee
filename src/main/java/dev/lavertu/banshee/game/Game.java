@@ -167,8 +167,18 @@ public class Game implements Serializable {
         return createDate;
     }
 
+    @PrePersist
+    public void setCreateDate() {
+        this.createDate = new Date();
+    }
+
     public Date getUpdateDate() {
         return updateDate;
+    }
+
+    @PreUpdate
+    public void setUpdateDate() {
+        this.updateDate = new Date();
     }
 
     // TODO - Make game stats a database table? or make player color part of game record?

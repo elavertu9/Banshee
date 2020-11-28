@@ -112,8 +112,18 @@ public class User implements Serializable {
         return this.createDate;
     }
 
+    @PrePersist
+    public void setCreateDate() {
+        this.createDate = new Date();
+    }
+
     public Date getUpdateDate() {
         return this.updateDate;
+    }
+
+    @PreUpdate
+    public void setUpdateDate() {
+        this.updateDate = new Date();
     }
 
     public ArrayList<iPiece> getMyPieces() {
