@@ -30,6 +30,11 @@ public class GamesService {
         return gamesRepository.getAllGames();
     }
 
+    public List<Game> getAllActiveGames() {
+        return gamesRepository.getAllActiveGames();
+    }
+
+
     public Game getGameByGameId(UUID gameId) {
         return gamesRepository.getGameByGameId(gameId);
     }

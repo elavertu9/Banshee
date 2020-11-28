@@ -23,19 +23,6 @@ public class UsersService {
     private UsersRepository usersRepository;
 
     public User createUser(User user) throws UsernameAlreadyExistsException, EmailAddressAlreadyExistsException {
-        String username = user.getUsername();
-        String emailAddress = user.getEmailAddress();
-
-        User foundUser = getUserByUsernameOrEmail(username, emailAddress);
-        if (foundUser != null) {
-            if (foundUser.getUsername().equals(username)) {
-                throw new UsernameAlreadyExistsException("Username " + username + " already taken. Please try another.");
-            }
-            if (foundUser.getEmailAddress().equals(emailAddress)) {
-                throw new EmailAddressAlreadyExistsException("Email " + emailAddress + " already taken. Please try another.");
-            }
-        }
-
         user.createUserId();
         usersRepository.saveUser(user);
         return user;

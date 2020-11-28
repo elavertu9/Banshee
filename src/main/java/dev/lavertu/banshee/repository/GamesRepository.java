@@ -27,6 +27,12 @@ public class GamesRepository {
         return query.getResultList();
     }
 
+    public List<Game> getAllActiveGames() {
+        String hql = "SELECT g FROM Game as g WHERE g.finished = FALSE";
+        TypedQuery<Game> query = entityManager.createQuery(hql, Game.class);
+        return query.getResultList();
+    }
+
     public Game getGameByGameId(UUID gameId) {
         String hql = "SELECT g FROM Game g WHERE g.gameId = :gameId";
         TypedQuery<Game> query = entityManager.createQuery(hql, Game.class);

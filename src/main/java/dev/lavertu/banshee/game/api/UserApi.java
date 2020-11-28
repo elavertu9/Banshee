@@ -3,8 +3,10 @@ package dev.lavertu.banshee.game.api;
 import dev.lavertu.banshee.exception.api.EmailAddressAlreadyExistsException;
 import dev.lavertu.banshee.exception.api.UserNotFoundException;
 import dev.lavertu.banshee.exception.api.UsernameAlreadyExistsException;
+import dev.lavertu.banshee.exception.api.ValidationException;
 import dev.lavertu.banshee.services.UsersService;
 import dev.lavertu.banshee.user.User;
+import dev.lavertu.banshee.utils.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,7 @@ public class UserApi {
 
     @PostMapping(value = "/create", consumes = "application/json", produces = "application/json")
     public ResponseEntity<User> createUser(@Valid @RequestBody User userInput) throws EmailAddressAlreadyExistsException, UsernameAlreadyExistsException {
+        Validator.validateCreateUserRequest(userInput, usersService);
         User user = usersService.createUser(userInput);
         return ResponseEntity.ok().body(user);
     }
