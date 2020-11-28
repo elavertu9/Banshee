@@ -1,12 +1,12 @@
 package dev.lavertu.banshee.game.api;
 
 import dev.lavertu.banshee.exception.api.EmailAddressAlreadyExistsException;
+import dev.lavertu.banshee.exception.api.UserNotFoundException;
 import dev.lavertu.banshee.exception.api.UsernameAlreadyExistsException;
 import dev.lavertu.banshee.services.UsersService;
 import dev.lavertu.banshee.user.User;
-import org.apache.coyote.Response;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +21,8 @@ import java.util.UUID;
 @RestController
 public class UserApi {
 
-    private static final Logger LOGGER = LogManager.getLogger(UserApi.class);
+//    private static final Logger LOGGER = LogManager.getLogger(UserApi.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserApi.class);
 
     UsersService usersService;
 
@@ -37,7 +38,7 @@ public class UserApi {
     }
 
     @PutMapping(value = "/update/{userId}", produces = "application/Json")
-    public ResponseEntity<User> updateUser(@PathVariable UUID userId, @RequestBody User userInput) {
+    public ResponseEntity<User> updateUser(@PathVariable UUID userId, @RequestBody User userInput) throws UserNotFoundException {
         User user = usersService.updateUser(userId, userInput);
         return ResponseEntity.ok().body(user);
     }

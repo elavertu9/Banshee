@@ -16,7 +16,7 @@ COMMENT ON TABLE public.users IS 'Keeps track of Banshee users';
 CREATE TABLE public.games
 (
     game_id uuid NOT NULL PRIMARY KEY,
-    game_object text[],
+    game_object character varying NOT NULL,
     finished boolean NOT NULL,
     create_date timestamp with time zone NOT NULL,
     update_date timestamp with time zone NOT NULL,

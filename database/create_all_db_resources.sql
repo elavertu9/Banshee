@@ -24,7 +24,7 @@ CREATE ROLE banshee_owner WITH LOGIN PASSWORD $1;
 ALTER USER banshee_owner WITH SUPERUSER;
 
 -- Create readonly user
-CREATE ROLE read_only with LOGIN PASSWORD $2;
+CREATE ROLE read_only WITH LOGIN PASSWORD $2;
 GRANT CONNECT ON DATABASE "Banshee" TO read_only;
 GRANT USAGE ON SCHEMA public TO read_only;
 GRANT SELECT ON ALL TABLES IN SCHEMA public TO read_only;
@@ -51,7 +51,7 @@ COMMENT ON TABLE public.users IS 'Keeps track of Banshee users';
 CREATE TABLE public.games
 (
     game_id uuid NOT NULL PRIMARY KEY,
-    game_object text[],
+    game_object character varying NOT NULL,
     finished boolean NOT NULL,
     create_date timestamp with time zone NOT NULL,
     update_date timestamp with time zone NOT NULL,
