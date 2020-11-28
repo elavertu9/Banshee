@@ -1,10 +1,17 @@
 package dev.lavertu.banshee.game;
 
 import dev.lavertu.banshee.game.pieces.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Stack;
 import java.util.Collections;
 
 public class GameBoard {
+
+//	private static final Logger LOGGER = LogManager.getLogger(GameBoard.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(GameBoard.class);
 
 	private iPiece[][] board;
 	private static final int COLS = 8;
@@ -18,6 +25,10 @@ public class GameBoard {
 		populatePieces();
 		shuffleDeck();
 		init();
+	}
+
+	public GameBoard(iPiece[][] gameBoard) {
+		this.board = gameBoard;
 	}
 
 	private void populatePieces() {

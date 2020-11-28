@@ -1,41 +1,28 @@
 package dev.lavertu.banshee.services;
 
 import dev.lavertu.banshee.exception.api.EmailAddressAlreadyExistsException;
+import dev.lavertu.banshee.exception.api.UserNotFoundException;
 import dev.lavertu.banshee.exception.api.UsernameAlreadyExistsException;
 import dev.lavertu.banshee.repository.UsersRepository;
 import dev.lavertu.banshee.user.User;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.Email;
 import java.util.List;
 import java.util.UUID;
 
 @Service
 public class UsersService {
 
-    private static final Logger LOGGER = LogManager.getLogger(UsersService.class);
+//    private static final Logger LOGGER = LogManager.getLogger(UsersService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UsersService.class);
 
     @Autowired
     private UsersRepository usersRepository;
 
     public User createUser(User user) throws UsernameAlreadyExistsException, EmailAddressAlreadyExistsException {
-        String username = user.getUsername();
-        String emailAddress = user.getEmailAddress();
-
-        User foundUser = getUserByUsernameOrEmail(username, emailAddress);
-        if (foundUser != null) {
-            if (foundUser.getUsername().equals(username)) {
-                throw new UsernameAlreadyExistsException("Username " + username + " already taken. Please try another.");
-            }
-            if (foundUser.getEmailAddress().equals(emailAddress)) {
-                throw new EmailAddressAlreadyExistsException("Email " + emailAddress + " already taken. Please try another.");
-            }
-        }
-
         user.createUserId();
         usersRepository.saveUser(user);
         return user;
@@ -61,12 +48,16 @@ public class UsersService {
         return usersRepository.getUserByEmailAddress(emailAddress);
     }
 
-    public User updateUser(UUID userId, User user) {
+    public User updateUser(UUID userId, User user) throws UserNotFoundException {
         String firstName = user.getFirstName();
         String lastName = user.getLastName();
         String emailAddress = user.getEmailAddress();
 
         User foundUser = getUserByUserId(userId);
+        if (foundUser == null) {
+            throw new UserNotFoundException("User not found. User must be created before being updated.");
+        }
+
         if (firstName != null && !foundUser.getFirstName().equals(firstName)) {
             foundUser.setFirstName(firstName);
         }

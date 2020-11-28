@@ -2,7 +2,9 @@ package dev.lavertu.banshee.game;
 
 import dev.lavertu.banshee.exception.*;
 import dev.lavertu.banshee.user.User;
+import dev.lavertu.banshee.utils.JpaGameConverter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,7 +21,11 @@ public class Game implements Serializable {
     private UUID gameId;
 
     @Column(name = "game_object")
-    private String[] game_object;
+    @Convert(converter = JpaGameConverter.class)
+    private GameBoard gameBoard;
+
+    @Column(name = "finished")
+    private Boolean finished;
 
     @ManyToOne
     @JoinColumn(name = "player1_id")
@@ -34,17 +40,17 @@ public class Game implements Serializable {
     @Column(name = "create_date")
     private Date createDate;
 
-    @CreationTimestamp
+    @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "update_date")
     private Date updateDate;
 
     @Transient
-    private GameBoard gameBoard;
-    @Transient
     private GameStats gameStats;
     @Transient
     private RuleEnforcer ruleEnforcer;
+
+    public Game(){}
 
     public Game(User player1, User player2) {
         this(UUID.randomUUID(), player1, player2);
@@ -54,9 +60,16 @@ public class Game implements Serializable {
         this.gameId = gameId;
         this.player1 = player1;
         this.player2 = player2;
+        this.finished = Boolean.FALSE;
         this.gameStats = new GameStats(player1, player2);
         this.gameBoard = new GameBoard();
         this.ruleEnforcer = new RuleEnforcer(this);
+    }
+
+    public void createUserId() {
+        if (this.gameId == null) {
+            this.gameId = UUID.randomUUID();
+        }
     }
 
     public void flipAll() {
@@ -118,6 +131,10 @@ public class Game implements Serializable {
         }
     }
 
+    public UUID getGameId() {
+        return gameId;
+    }
+
     public User getPlayer1() {
         return player1;
     }
@@ -130,12 +147,49 @@ public class Game implements Serializable {
         return gameBoard;
     }
 
+    public void setGameBoard(GameBoard gameBoard) {
+        this.gameBoard = gameBoard;
+    }
+
     public GameStats getGameStats() {
         return gameStats;
     }
 
+    public Boolean getFinished() {
+        return finished;
+    }
+
+    public void setFinished(Boolean finished) {
+        this.finished = finished;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    @PrePersist
+    public void setCreateDate() {
+        this.createDate = new Date();
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    @PreUpdate
+    public void setUpdateDate() {
+        this.updateDate = new Date();
+    }
+
+    // TODO - Make game stats a database table? or make player color part of game record?
     @Override
     public String toString() {
-        return player1.getUsername() + " - " + gameStats.getPlayer1Color() + "\n" + player2.getUsername() + " - " + gameStats.getPlayer2Color() + "\n" + gameBoard.toString();
+        String p1Color = null;
+        String p2Color = null;
+        if (gameStats != null) {
+            p1Color = gameStats.getPlayer1Color().toString();
+            p2Color = gameStats.getPlayer2Color().toString();
+        }
+        return player1.getUsername() + " - " + p1Color + "\n" + player2.getUsername() + " - " + p2Color + "\n" + gameBoard.toString();
     }
 }

@@ -1,10 +1,10 @@
 package dev.lavertu.banshee.user;
 
 import dev.lavertu.banshee.game.pieces.iPiece;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -17,7 +17,8 @@ import java.util.UUID;
 @Table(name = "users", schema = "public")
 public class User implements Serializable {
 
-    private static final Logger LOGGER = LogManager.getLogger(User.class);
+//    private static final Logger LOGGER = LogManager.getLogger(User.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(User.class);
 
     @Id
     @Column(name = "user_id")
@@ -62,7 +63,7 @@ public class User implements Serializable {
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;
-//        this.userStats = new UserStats();
+        this.userStats = new UserStats();
     }
 
     public void createUserId() {
@@ -111,13 +112,23 @@ public class User implements Serializable {
         return this.createDate;
     }
 
+    @PrePersist
+    public void setCreateDate() {
+        this.createDate = new Date();
+    }
+
     public Date getUpdateDate() {
         return this.updateDate;
     }
 
-//    public ArrayList<iPiece> getMyPieces() {
-//        return myPieces;
-//    }
+    @PreUpdate
+    public void setUpdateDate() {
+        this.updateDate = new Date();
+    }
+
+    public ArrayList<iPiece> getMyPieces() {
+        return myPieces;
+    }
 
     @Override
     public String toString() {

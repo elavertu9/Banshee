@@ -1,8 +1,8 @@
 package dev.lavertu.banshee.repository;
 
 import dev.lavertu.banshee.user.User;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -16,7 +16,8 @@ import java.util.UUID;
 @Repository
 public class UsersRepository {
 
-    private static final Logger LOGGER = LogManager.getLogger(UsersRepository.class);
+//    private static final Logger LOGGER = LogManager.getLogger(UsersRepository.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UsersRepository.class);
 
     @PersistenceContext
     private EntityManager entityManager;
