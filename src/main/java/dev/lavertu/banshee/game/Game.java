@@ -5,7 +5,6 @@ import dev.lavertu.banshee.user.User;
 import dev.lavertu.banshee.utils.JpaGameConverter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -28,11 +27,11 @@ public class Game implements Serializable {
     private Boolean finished;
 
     @ManyToOne
-    @JoinColumn(name = "player1_id")
+    @JoinColumn(name = "user1_id")
     private User player1;
 
     @ManyToOne
-    @JoinColumn(name = "player2_id")
+    @JoinColumn(name = "user2_id")
     private User player2;
 
     @CreationTimestamp
