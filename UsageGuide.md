@@ -33,7 +33,7 @@ Any posted data must be in JSON format
 ### Games
 
 All requests to the Games API must be prefixed with **/game**  
-Example:  `curl -d {"player1Username": "player1", "player2Username": "player2"} -H "Content-Type:application/json" http://localhost:8080/api/game/create`
+Example:  `curl -X POST --url http://localhost:8080/api/game/create -H "Content-Type:application/json" -d '{"player1Username": "player1", "player2Username": "player2"}'`
 
 - ##### Create Game - POST /create
     - **Request Parameters**
@@ -97,7 +97,7 @@ Example:  `curl -d {"player1Username": "player1", "player2Username": "player2"} 
 ### Users
 
 All requests to the Games API must be prefixed with **/user**  
-Example:  `curl -d {"player1Username": "player1", "player2Username": "player2"} -H "Content-Type:application/json" http://localhost:8080/api/user/create`
+Example:  `curl -X POST --url http://localhost:8080/api/user/create -H 'Content-Type: application/json' -d '{"username": "pizza", "firstName": "Pizza", "lastName": "Man", "emailAddress": "pizza@gmail.com"}'`
 
 - ##### Create User - POST /create
     - **Request Parameters**

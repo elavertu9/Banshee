@@ -3,29 +3,24 @@ package dev.lavertu.banshee.utils;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.lavertu.banshee.exception.api.GameMappingException;
 import dev.lavertu.banshee.game.Color;
 import dev.lavertu.banshee.game.Coordinate;
 import dev.lavertu.banshee.game.GameBoard;
-import dev.lavertu.banshee.game.api.GameApi;
 import dev.lavertu.banshee.game.pieces.iPiece;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.postgresql.util.PGobject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 @Converter
 public class JpaGameConverter implements AttributeConverter<GameBoard, String> {
 
 //    private static final Logger LOGGER = LogManager.getLogger(JpaGameConverter.class);
-    private static final Logger LOGGER = LoggerFactory.getLogger(GameApi.class);
-    private final static ObjectMapper objectMapper = new ObjectMapper();
+    private static final Logger LOGGER = LoggerFactory.getLogger(JpaGameConverter.class);
 
     private static final int COLS = 8;
     private static final int ROWS = 4;

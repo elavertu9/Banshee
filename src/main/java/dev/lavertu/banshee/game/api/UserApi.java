@@ -3,7 +3,6 @@ package dev.lavertu.banshee.game.api;
 import dev.lavertu.banshee.exception.api.EmailAddressAlreadyExistsException;
 import dev.lavertu.banshee.exception.api.UserNotFoundException;
 import dev.lavertu.banshee.exception.api.UsernameAlreadyExistsException;
-import dev.lavertu.banshee.exception.api.ValidationException;
 import dev.lavertu.banshee.services.UsersService;
 import dev.lavertu.banshee.user.User;
 import dev.lavertu.banshee.utils.Validator;

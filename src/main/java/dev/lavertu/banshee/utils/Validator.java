@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.UUID;
 
 public class Validator {
+    private Validator() {}
+
     public static void validateCreateGameRequest(Map<String, String> payload, UsersService usersService) throws ValidationException, UsernameNotFoundException {
         String player1Username = payload.get("player1Username");
         String player2Username = payload.get("player2Username");
