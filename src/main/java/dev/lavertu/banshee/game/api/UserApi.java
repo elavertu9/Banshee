@@ -44,7 +44,7 @@ public class UserApi {
         return ResponseEntity.ok().body(user);
     }
 
-    @GetMapping(value = "/allusers", produces = "application/Json")
+    @GetMapping(value = "/allUsers", produces = "application/Json")
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> userList = usersService.getAllUsers();
         return ResponseEntity.ok().body(userList);

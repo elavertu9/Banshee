@@ -1,7 +1,11 @@
 package dev.lavertu.banshee.game.api;
 
+import dev.lavertu.banshee.exception.CoordinateOutOfBoundsException;
+import dev.lavertu.banshee.exception.GameOverException;
+import dev.lavertu.banshee.exception.IllegalMoveException;
 import dev.lavertu.banshee.exception.api.*;
 import dev.lavertu.banshee.game.Game;
+import dev.lavertu.banshee.game.Move;
 import dev.lavertu.banshee.services.GamesService;
 import dev.lavertu.banshee.services.UsersService;
 import dev.lavertu.banshee.user.User;
@@ -12,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -52,13 +57,22 @@ public class GameApi {
         return ResponseEntity.ok().body(game);
     }
 
-    @GetMapping(value = "/api/game/allgames", produces = "application/Json")
+    @PostMapping(value = "/api/game/move/{gameId}", produces = "application/json")
+    public ResponseEntity<Game> makeMove(@PathVariable UUID gameId, @Valid @RequestBody Move move) throws GameOverException, IllegalMoveException, CoordinateOutOfBoundsException {
+        Game game = gamesService.getGameByGameId(gameId);
+        gamesService.makeMove(game, move);
+        usersService.saveUser(game.getUser1());
+        usersService.saveUser(game.getUser2());
+        return ResponseEntity.ok().body(null);
+    }
+
+    @GetMapping(value = "/api/game/allGames", produces = "application/Json")
     public ResponseEntity<List<Game>> getAllGames() {
         List<Game> gameList = gamesService.getAllGames();
         return ResponseEntity.ok().body(gameList);
     }
 
-    @GetMapping(value = "/api/game/allactivegames", produces = "application/Json")
+    @GetMapping(value = "/api/game/allActiveGames", produces = "application/Json")
     public ResponseEntity<List<Game>> getAllActiveGames() {
         List<Game> gameList = gamesService.getAllActiveGames();
         return ResponseEntity.ok().body(gameList);

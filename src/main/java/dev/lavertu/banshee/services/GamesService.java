@@ -1,5 +1,9 @@
 package dev.lavertu.banshee.services;
 
+import dev.lavertu.banshee.exception.CoordinateOutOfBoundsException;
+import dev.lavertu.banshee.exception.GameOverException;
+import dev.lavertu.banshee.exception.IllegalMoveException;
+import dev.lavertu.banshee.game.Move;
 import dev.lavertu.banshee.repository.GamesRepository;
 import dev.lavertu.banshee.game.Game;
 //import org.apache.logging.log4j.Logger;
@@ -41,5 +45,10 @@ public class GamesService {
 
     public List<Game> getGamesByUserId(UUID userId) {
         return gamesRepository.getGamesByUserId(userId);
+    }
+
+    public void makeMove(Game game, Move move) throws GameOverException, IllegalMoveException, CoordinateOutOfBoundsException {
+        game.makeMove(move);
+        gamesRepository.saveGame(game);
     }
 }

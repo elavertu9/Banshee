@@ -1,7 +1,6 @@
 package dev.lavertu.banshee.game;
 
 import dev.lavertu.banshee.exception.*;
-import dev.lavertu.banshee.services.GamesService;
 import dev.lavertu.banshee.user.User;
 import dev.lavertu.banshee.utils.JpaGameConverter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -25,7 +24,7 @@ public class Game implements Serializable {
     private GameBoard gameBoard;
 
     @Column(name = "finished")
-    private Boolean finished;
+    private boolean finished;
 
     @Column(name = "user1_color")
     private String user1Color;
@@ -85,6 +84,13 @@ public class Game implements Serializable {
         this.ruleEnforcer = new RuleEnforcer(this);
     }
 
+    private RuleEnforcer getRuleEnforcer() {
+        if (this.ruleEnforcer == null) {
+            return new RuleEnforcer(this);
+        }
+        return this.ruleEnforcer;
+    }
+
     public void createGameId() {
         if (this.gameId == null) {
             this.gameId = UUID.randomUUID();
@@ -99,8 +105,8 @@ public class Game implements Serializable {
         }
     }
 
-    public void makeMove(Move move) {
-        try {
+    public void makeMove(Move move) throws GameOverException, IllegalMoveException, CoordinateOutOfBoundsException {
+        if(!finished) {
             if(move.getMoveType() == MoveType.CAPTURE) {
                 performCapture(move);
             }else if(move.getMoveType() == MoveType.TRAVEL) {
@@ -111,39 +117,28 @@ public class Game implements Serializable {
                 throw new IllegalMoveException("Move type unrecognized " + move.getMoveType());
             }
             switchTurn(turn);
-        } catch(IllegalMoveException e) {
-            e.printStackTrace();
+            // TODO - Check for finished
+        } else {
+            throw new GameOverException();
         }
     }
 
-    private void performCapture(Move move) {
-        try {
-            if(ruleEnforcer.isValidCapture(move)) {
-                gameBoard.removePiece(move.getTo());
-                gameBoard.swapPieces(move.getFrom(), move.getTo());
-            }
-        } catch(CoordinateOutOfBoundsException | GameOverException | IllegalMoveException e) {
-            e.printStackTrace();
+    private void performCapture(Move move) throws CoordinateOutOfBoundsException, IllegalMoveException {
+        if(getRuleEnforcer().isValidCapture(move)) {
+            gameBoard.removePiece(move.getTo());
+            gameBoard.swapPieces(move.getFrom(), move.getTo());
         }
     }
 
-    private void performTravel(Move move) {
-        try {
-            if(ruleEnforcer.isValidTravel(move)) {
-                gameBoard.swapPieces(move.getFrom(), move.getTo());
-            }
-        } catch(CoordinateOutOfBoundsException | GameOverException | IllegalMoveException e) {
-            e.printStackTrace();
+    private void performTravel(Move move) throws CoordinateOutOfBoundsException, IllegalMoveException {
+        if(getRuleEnforcer().isValidTravel(move)) {
+            gameBoard.swapPieces(move.getFrom(), move.getTo());
         }
     }
 
-    private void performFlip(Move move) {
-        try {
-            if(ruleEnforcer.isValidFlip(move)) {
-                gameBoard.pieceAt(move.getTo()).flipPiece();
-            }
-        } catch(CoordinateOutOfBoundsException | GameOverException | IllegalMoveException e) {
-            e.printStackTrace();
+    private void performFlip(Move move) throws CoordinateOutOfBoundsException, IllegalMoveException {
+        if(getRuleEnforcer().isValidFlip(move)) {
+            gameBoard.pieceAt(move.getTo()).flipPiece();
         }
     }
 
