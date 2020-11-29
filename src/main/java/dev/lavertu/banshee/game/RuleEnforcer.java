@@ -11,7 +11,7 @@ public class RuleEnforcer {
         this.game = game;
     }
 
-    public boolean isValidCapture(Move move) throws CoordinateOutOfBoundsException, IllegalCaptureException, CaptureEmptySpaceException, SameColorException, GameOverException, IllegalHopException {
+    public boolean isValidCapture(Move move) throws CoordinateOutOfBoundsException, GameOverException, IllegalMoveException {
         if(!game.getFinished()) {
             if(coordinatesInBounds(move)) {
                 if(isValidHop(move)) {
@@ -20,57 +20,60 @@ public class RuleEnforcer {
                             if((!isSameCoordinate(move.getFrom(), move.getTo())) && (areFaceUp(move)) && (!isEmptySpace(move.getFrom()) && !isEmptySpace(move.getTo())) && (!isGeneralCapturingSoldier(move)) && ((isSoldierCapturingGeneral(move)) || (canCapture(move))) ) {
                                 return true;
                             } else {
-                                throw new IllegalCaptureException();
+                                errorMessage = "Illegal capture attempted \n" + move.toString();
                             }
                         } else {
-                            throw new SameColorException();
+                            errorMessage = "Cannot capture piece of same color \n" + move.toString();
                         }
                     } else {
-                        throw new CaptureEmptySpaceException();
+                        errorMessage = "Cannot capture an empty space \n" + move.toString();
                     }
                 } else {
-                    throw new IllegalHopException();
+                    errorMessage = "Move Coordinates indicate an invalid hop \n" + move.toString();
                 }
             } else {
-                throw new CoordinateOutOfBoundsException();
+                throw new CoordinateOutOfBoundsException(move.toString());
             }
         } else {
             throw new GameOverException();
         }
 
+        throw new IllegalMoveException(errorMessage);
     }
 
-    public boolean isValidTravel(Move move) throws CoordinateOutOfBoundsException, SpaceOccupiedException, GameOverException, IllegalHopException {
+    public boolean isValidTravel(Move move) throws CoordinateOutOfBoundsException, GameOverException, IllegalMoveException {
         if(!game.getFinished()) {
             if(coordinatesInBounds(move)) {
                 if(isValidHop(move)) {
                     if(isPieceToEmpty(move)) {
                         return true;
                     } else {
-                        throw new SpaceOccupiedException();
+                        errorMessage = "Space occupied when attempting to travel \n" + move.toString();
                     }
                 } else {
-                    throw new IllegalHopException();
+                    errorMessage = "Move Coordinates indicate an invalid hop \n" + move.toString();
                 }
             } else {
-                throw new CoordinateOutOfBoundsException();
+                throw new CoordinateOutOfBoundsException(move.toString());
             }
         } else {
             throw new GameOverException();
         }
+
+        throw new IllegalMoveException(errorMessage);
     }
 
-    public boolean isValidFlip(Move move) throws CoordinateOutOfBoundsException, PieceFaceUpException, GameOverException {
+    public boolean isValidFlip(Move move) throws CoordinateOutOfBoundsException, GameOverException, IllegalMoveException {
         if(!game.getFinished()) {
             if(coordinatesInBounds(move)) {
                 iPiece piece = game.getGameBoard().pieceAt(move.getTo());
                 if(!piece.getIsFaceUp()) {
                     return true;
                 } else {
-                    throw new PieceFaceUpException();
+                    throw new IllegalMoveException("Piece already face up \n" + move.toString());
                 }
             } else {
-                throw new CoordinateOutOfBoundsException();
+                throw new CoordinateOutOfBoundsException(move.toString());
             }
         } else {
             throw new GameOverException();

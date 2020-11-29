@@ -1,9 +1,6 @@
 package dev.lavertu.banshee.game.api;
 
-import dev.lavertu.banshee.exception.api.GameMappingException;
-import dev.lavertu.banshee.exception.api.UserNotFoundException;
-import dev.lavertu.banshee.exception.api.UsernameNotFoundException;
-import dev.lavertu.banshee.exception.api.ValidationException;
+import dev.lavertu.banshee.exception.api.*;
 import dev.lavertu.banshee.game.Game;
 import dev.lavertu.banshee.services.GamesService;
 import dev.lavertu.banshee.services.UsersService;
@@ -47,7 +44,7 @@ public class GameApi {
     }
 
     @PostMapping(value = "/api/game/create", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Game> createGame(@RequestBody Map<String, String> payload) throws UsernameNotFoundException, ValidationException {
+    public ResponseEntity<Game> createGame(@RequestBody Map<String, String> payload) throws EntityNotFoundException, ValidationException {
         Validator.validateCreateGameRequest(payload, usersService);
         User user1 = usersService.getUserByUsername(payload.get("user1Username"));
         User user2 = usersService.getUserByUsername(payload.get("user2Username"));
@@ -74,7 +71,7 @@ public class GameApi {
     }
 
     @GetMapping(value = "/api/game/userId/{userId}", produces = "application/Json")
-    public ResponseEntity<List<Game>> getGamesByUserId(@PathVariable UUID userId) throws UserNotFoundException {
+    public ResponseEntity<List<Game>> getGamesByUserId(@PathVariable UUID userId) throws EntityNotFoundException {
         Validator.validateUserByUserId(userId, usersService);
         List<Game> games = gamesService.getGamesByUserId(userId);
         return ResponseEntity.ok().body(games);
