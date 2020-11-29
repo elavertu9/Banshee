@@ -50,7 +50,7 @@ public class UserApi {
         return ResponseEntity.ok().body(userList);
     }
 
-    @GetMapping(value = "/id/{userId}", produces = "application/Json")
+    @GetMapping(value = "/userId/{userId}", produces = "application/Json")
     public ResponseEntity<User> getUserByUserId(@PathVariable UUID userId) {
         User user = usersService.getUserByUserId(userId);
         return ResponseEntity.ok().body(user);

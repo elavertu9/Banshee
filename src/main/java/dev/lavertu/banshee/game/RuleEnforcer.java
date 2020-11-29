@@ -13,7 +13,7 @@ public class RuleEnforcer {
 
     public boolean isValidCapture(Move move) throws CoordinateOutOfBoundsException, GameOverException, IllegalMoveException {
         String errorMessage = "";
-        if(!game.getGameStats().isGameOver()) {
+        if(!game.getFinished()) {
             if(coordinatesInBounds(move)) {
                 if(isValidHop(move)) {
                     if(!isPieceToEmpty(move)) {
@@ -44,7 +44,7 @@ public class RuleEnforcer {
 
     public boolean isValidTravel(Move move) throws CoordinateOutOfBoundsException, GameOverException, IllegalMoveException {
         String errorMessage = "";
-        if(!game.getGameStats().isGameOver()) {
+        if(!game.getFinished()) {
             if(coordinatesInBounds(move)) {
                 if(isValidHop(move)) {
                     if(isPieceToEmpty(move)) {
@@ -66,7 +66,7 @@ public class RuleEnforcer {
     }
 
     public boolean isValidFlip(Move move) throws CoordinateOutOfBoundsException, GameOverException, IllegalMoveException {
-        if(!game.getGameStats().isGameOver()) {
+        if(!game.getFinished()) {
             if(coordinatesInBounds(move)) {
                 iPiece piece = game.getGameBoard().pieceAt(move.getTo());
                 if(!piece.getIsFaceUp()) {

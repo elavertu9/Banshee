@@ -41,17 +41,10 @@ public class GamesRepository {
         return (gameList == null || gameList.isEmpty()) ? null : gameList.get(0);
     }
 
-    public List<Game> getGamesByPlayer1Id(UUID player1Id) {
-        String hql = "SELECT g FROM Game g WHERE g.player1.userId = :player1Id";
+    public List<Game> getGamesByUserId(UUID userId) {
+        String hql = "SELECT g FROM Game g WHERE :userId IN (g.user1.userId, g.user2.userId)";
         TypedQuery<Game> query = entityManager.createQuery(hql, Game.class);
-        query.setParameter("player1Id", player1Id);
-        return query.getResultList();
-    }
-
-    public List<Game> getGamesByPlayer2Id(UUID player2Id) {
-        String hql = "SELECT g FROM Game g WHERE g.player2.userId = :player2Id";
-        TypedQuery<Game> query = entityManager.createQuery(hql, Game.class);
-        query.setParameter("player2Id", player2Id);
+        query.setParameter("userId", userId);
         return query.getResultList();
     }
 

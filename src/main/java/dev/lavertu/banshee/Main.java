@@ -12,9 +12,9 @@ import java.util.UUID;
 public class Main
 {
     public static void commandParserTesting() {
-        User player1 = new User(UUID.randomUUID(), "Player1", "Player", "One", "player1@gmail.com");
-        User player2 = new User(UUID.randomUUID(), "Player2", "Player", "Two", "player2@gmail.com");
-        Game game = new Game(player1, player2);
+        User user1 = new User(UUID.randomUUID(), "User1", "User", "One", "user1@gmail.com");
+        User user2 = new User(UUID.randomUUID(), "User2", "User", "Two", "user2@gmail.com");
+        Game game = new Game(user1, user2);
         System.out.println(game.toString());
         ServerCommandParser commandParser = new ServerCommandParser(game);
         commandParser.listen();

@@ -23,6 +23,7 @@ public class UsersService {
 
     public User createUser(User user) {
         user.createUserId();
+        user.initializeGameStats();
         usersRepository.saveUser(user);
         return user;
     }
