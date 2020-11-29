@@ -43,6 +43,7 @@ public class RuleEnforcer {
     }
 
     public boolean isValidTravel(Move move) throws CoordinateOutOfBoundsException, GameOverException, IllegalMoveException {
+        String errorMessage = "";
         if(!game.getFinished()) {
             if(coordinatesInBounds(move)) {
                 if(isValidHop(move)) {
