@@ -1,9 +1,6 @@
 package dev.lavertu.banshee.game.api;
 
-import dev.lavertu.banshee.exception.api.GameMappingException;
-import dev.lavertu.banshee.exception.api.UserNotFoundException;
-import dev.lavertu.banshee.exception.api.UsernameNotFoundException;
-import dev.lavertu.banshee.exception.api.ValidationException;
+import dev.lavertu.banshee.exception.api.*;
 import dev.lavertu.banshee.game.Game;
 import dev.lavertu.banshee.services.GamesService;
 import dev.lavertu.banshee.services.UsersService;
@@ -47,7 +44,7 @@ public class GameApi {
     }
 
     @PostMapping(value = "/api/game/create", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Game> createGame(@RequestBody Map<String, String> payload) throws GameMappingException, UsernameNotFoundException, ValidationException {
+    public ResponseEntity<Game> createGame(@RequestBody Map<String, String> payload) throws GameMappingException, EntityNotFoundException, ValidationException {
         Validator.validateCreateGameRequest(payload, usersService);
         String player1Username = payload.get("player1Username");
         String player2Username = payload.get("player2Username");
@@ -76,14 +73,14 @@ public class GameApi {
     }
 
     @GetMapping(value = "/api/game/player1Id/{player1Id}", produces = "application/Json")
-    public ResponseEntity<List<Game>> getGamesByPlayer1Id(@PathVariable UUID player1Id) throws UserNotFoundException {
+    public ResponseEntity<List<Game>> getGamesByPlayer1Id(@PathVariable UUID player1Id) throws EntityNotFoundException {
         Validator.validateUserByUserId(player1Id, usersService);
         List<Game> games = gamesService.getGamesByPlayer1Id(player1Id);
         return ResponseEntity.ok().body(games);
     }
 
     @GetMapping(value = "/api/game/player2Id/{player2Id}", produces = "application/Json")
-    public ResponseEntity<List<Game>> getGamesByPlayer2Id(@PathVariable UUID player2Id) throws UserNotFoundException {
+    public ResponseEntity<List<Game>> getGamesByPlayer2Id(@PathVariable UUID player2Id) throws EntityNotFoundException {
         Validator.validateUserByUserId(player2Id, usersService);
         List<Game> games = gamesService.getGamesByPlayer2Id(player2Id);
         return ResponseEntity.ok().body(games);

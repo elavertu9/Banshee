@@ -79,7 +79,7 @@ public class Game implements Serializable {
         }
     }
 
-    public void makeMove(Move move) throws IllegalMoveException {
+    public void makeMove(Move move) {
         try {
             if(move.getMoveType() == MoveType.CAPTURE) {
                 performCapture(move);
@@ -88,45 +88,41 @@ public class Game implements Serializable {
             } else if(move.getMoveType() == MoveType.FLIP) {
                 performFlip(move);
             } else {
-                throw new IllegalMoveException();
+                throw new IllegalMoveException("Move type unrecognized " + move.getMoveType());
             }
-        } catch(CaptureException | TravelException | FlipException e) {
+        } catch(IllegalMoveException e) {
             e.printStackTrace();
-            throw new IllegalMoveException();
         }
     }
 
-    private void performCapture(Move move) throws CaptureException {
+    private void performCapture(Move move) {
         try {
             if(ruleEnforcer.isValidCapture(move)) {
                 gameBoard.removePiece(move.getTo());
                 gameBoard.swapPieces(move.getFrom(), move.getTo());
             }
-        } catch(CoordinateOutOfBoundsException | IllegalCaptureException | CaptureEmptySpaceException | SameColorException | GameOverException | IllegalHopException e) {
+        } catch(CoordinateOutOfBoundsException | GameOverException | IllegalMoveException e) {
             e.printStackTrace();
-            throw new CaptureException();
         }
     }
 
-    private void performTravel(Move move) throws TravelException {
+    private void performTravel(Move move) {
         try {
             if(ruleEnforcer.isValidTravel(move)) {
                 gameBoard.swapPieces(move.getFrom(), move.getTo());
             }
-        } catch(CoordinateOutOfBoundsException | SpaceOccupiedException | GameOverException | IllegalHopException e) {
+        } catch(CoordinateOutOfBoundsException | GameOverException | IllegalMoveException e) {
             e.printStackTrace();
-            throw new TravelException();
         }
     }
 
-    private void performFlip(Move move) throws FlipException {
+    private void performFlip(Move move) {
         try {
             if(ruleEnforcer.isValidFlip(move)) {
                 gameBoard.pieceAt(move.getTo()).flipPiece();
             }
-        } catch(CoordinateOutOfBoundsException | PieceFaceUpException | GameOverException e) {
+        } catch(CoordinateOutOfBoundsException | GameOverException | IllegalMoveException e) {
             e.printStackTrace();
-            throw new FlipException();
         }
     }
 

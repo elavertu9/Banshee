@@ -1,8 +1,7 @@
 package dev.lavertu.banshee.services;
 
-import dev.lavertu.banshee.exception.api.EmailAddressAlreadyExistsException;
-import dev.lavertu.banshee.exception.api.UserNotFoundException;
-import dev.lavertu.banshee.exception.api.UsernameAlreadyExistsException;
+import dev.lavertu.banshee.exception.api.EntityAlreadyExistsException;
+import dev.lavertu.banshee.exception.api.EntityNotFoundException;
 import dev.lavertu.banshee.repository.UsersRepository;
 import dev.lavertu.banshee.user.User;
 import org.slf4j.Logger;
@@ -22,7 +21,7 @@ public class UsersService {
     @Autowired
     private UsersRepository usersRepository;
 
-    public User createUser(User user) throws UsernameAlreadyExistsException, EmailAddressAlreadyExistsException {
+    public User createUser(User user) {
         user.createUserId();
         usersRepository.saveUser(user);
         return user;
@@ -48,14 +47,14 @@ public class UsersService {
         return usersRepository.getUserByEmailAddress(emailAddress);
     }
 
-    public User updateUser(UUID userId, User user) throws UserNotFoundException {
+    public User updateUser(UUID userId, User user) throws EntityNotFoundException {
         String firstName = user.getFirstName();
         String lastName = user.getLastName();
         String emailAddress = user.getEmailAddress();
 
         User foundUser = getUserByUserId(userId);
         if (foundUser == null) {
-            throw new UserNotFoundException("User not found. User must be created before being updated.");
+            throw new EntityNotFoundException("User not found. User must be created before being updated.");
         }
 
         if (firstName != null && !foundUser.getFirstName().equals(firstName)) {

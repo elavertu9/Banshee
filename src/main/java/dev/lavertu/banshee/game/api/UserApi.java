@@ -1,8 +1,7 @@
 package dev.lavertu.banshee.game.api;
 
-import dev.lavertu.banshee.exception.api.EmailAddressAlreadyExistsException;
-import dev.lavertu.banshee.exception.api.UserNotFoundException;
-import dev.lavertu.banshee.exception.api.UsernameAlreadyExistsException;
+import dev.lavertu.banshee.exception.api.EntityAlreadyExistsException;
+import dev.lavertu.banshee.exception.api.EntityNotFoundException;
 import dev.lavertu.banshee.services.UsersService;
 import dev.lavertu.banshee.user.User;
 import dev.lavertu.banshee.utils.Validator;
@@ -33,14 +32,14 @@ public class UserApi {
     }
 
     @PostMapping(value = "/create", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<User> createUser(@Valid @RequestBody User userInput) throws EmailAddressAlreadyExistsException, UsernameAlreadyExistsException {
+    public ResponseEntity<User> createUser(@Valid @RequestBody User userInput) throws EntityAlreadyExistsException {
         Validator.validateCreateUserRequest(userInput, usersService);
         User user = usersService.createUser(userInput);
         return ResponseEntity.ok().body(user);
     }
 
     @PutMapping(value = "/update/{userId}", produces = "application/Json")
-    public ResponseEntity<User> updateUser(@PathVariable UUID userId, @RequestBody User userInput) throws UserNotFoundException {
+    public ResponseEntity<User> updateUser(@PathVariable UUID userId, @RequestBody User userInput) throws EntityNotFoundException {
         User user = usersService.updateUser(userId, userInput);
         return ResponseEntity.ok().body(user);
     }
