@@ -9,6 +9,7 @@
 * [Installation](#installation)
 * [GitHub Work Flow](#github-work-flow)
 * [Usage](#usage)
+  * [Command Parser](#command-parser)
 * [License](#license)
 * [Contact](#contact)
 
@@ -18,10 +19,9 @@ Banshee is in progress... Development is supported on the following platforms:
 * Debian Linux Distributions
 
 ### Built With
-Banshee is built using Java, Maven, Swift
+Banshee is built using Java, Maven
 * [Java](https://www.java.com/en/)
 * [Maven](https://maven.apache.org/)
-* [Swift](https://swift.org/)
 * [Springboot](https://spring.io/projects/spring-boot)
 
 ## Tools
