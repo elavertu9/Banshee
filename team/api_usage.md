@@ -64,7 +64,7 @@ curl -X POST --url http://localhost:8080/api/game/create -H "Content-Type:applic
 
 #### Get All Games
 ```text
-[GET] /api/game/allgames
+[GET] /api/game/allGames
 ```
 * Response
     * Returns all games
@@ -73,7 +73,7 @@ curl -X POST --url http://localhost:8080/api/game/create -H "Content-Type:applic
     
 #### Get All Active Games
 ```text
-[GET] /api/game/allactivegames
+[GET] /api/game/allActiveGames
 ```
 * Response
     * Returns the list of all active games
@@ -82,7 +82,7 @@ curl -X POST --url http://localhost:8080/api/game/create -H "Content-Type:applic
     
 #### Get Game By Game Id
 ```text
-[GET] /api/game/gameid/{gameId}
+[GET] /api/game/gameId/{gameId}
 ```
 * Request Parameters
     * gameId - *REQUIRED* - UUID of the game to find 
@@ -93,7 +93,7 @@ curl -X POST --url http://localhost:8080/api/game/create -H "Content-Type:applic
     
 #### Get Game By UserId
 ```text
-[GET] /api/game/userid/{userId}
+[GET] /api/game/userId/{userId}
 ```
 * Request Parameters
     * userId - *REQUIRED* - UUID of user to find all games for
@@ -151,7 +151,7 @@ curl -X POST --url http://localhost:8080/api/user/create -H 'Content-Type: appli
 
 #### Get All Users
 ```text
-[GET] /api/user/allusers
+[GET] /api/user/allUsers
 ```
 * Response
     * Returns list of all user objects
