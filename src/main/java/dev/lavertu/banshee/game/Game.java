@@ -99,20 +99,24 @@ public class Game implements Serializable {
         }
     }
 
-    public void makeMove(Move move) {
-        try {
-            if(move.getMoveType() == MoveType.CAPTURE) {
-                performCapture(move);
-            }else if(move.getMoveType() == MoveType.TRAVEL) {
-                performTravel(move);
-            } else if(move.getMoveType() == MoveType.FLIP) {
-                performFlip(move);
-            } else {
-                throw new IllegalMoveException("Move type unrecognized " + move.getMoveType());
+    public void makeMove(Move move) throws GameOverException {
+        if(!finished) {
+            try {
+                if(move.getMoveType() == MoveType.CAPTURE) {
+                    performCapture(move);
+                }else if(move.getMoveType() == MoveType.TRAVEL) {
+                    performTravel(move);
+                } else if(move.getMoveType() == MoveType.FLIP) {
+                    performFlip(move);
+                } else {
+                    throw new IllegalMoveException("Move type unrecognized " + move.getMoveType());
+                }
+                switchTurn(turn);
+            } catch(IllegalMoveException e) {
+                e.printStackTrace();
             }
-            switchTurn(turn);
-        } catch(IllegalMoveException e) {
-            e.printStackTrace();
+        } else {
+            throw new GameOverException();
         }
     }
 
@@ -122,7 +126,7 @@ public class Game implements Serializable {
                 gameBoard.removePiece(move.getTo());
                 gameBoard.swapPieces(move.getFrom(), move.getTo());
             }
-        } catch(CoordinateOutOfBoundsException | GameOverException | IllegalMoveException e) {
+        } catch(CoordinateOutOfBoundsException | IllegalMoveException e) {
             e.printStackTrace();
         }
     }
@@ -132,7 +136,7 @@ public class Game implements Serializable {
             if(ruleEnforcer.isValidTravel(move)) {
                 gameBoard.swapPieces(move.getFrom(), move.getTo());
             }
-        } catch(CoordinateOutOfBoundsException | GameOverException | IllegalMoveException e) {
+        } catch(CoordinateOutOfBoundsException | IllegalMoveException e) {
             e.printStackTrace();
         }
     }
@@ -142,7 +146,7 @@ public class Game implements Serializable {
             if(ruleEnforcer.isValidFlip(move)) {
                 gameBoard.pieceAt(move.getTo()).flipPiece();
             }
-        } catch(CoordinateOutOfBoundsException | GameOverException | IllegalMoveException e) {
+        } catch(CoordinateOutOfBoundsException | IllegalMoveException e) {
             e.printStackTrace();
         }
     }
