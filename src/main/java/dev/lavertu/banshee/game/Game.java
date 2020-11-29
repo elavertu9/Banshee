@@ -1,6 +1,7 @@
 package dev.lavertu.banshee.game;
 
 import dev.lavertu.banshee.exception.*;
+import dev.lavertu.banshee.services.GamesService;
 import dev.lavertu.banshee.user.User;
 import dev.lavertu.banshee.utils.JpaGameConverter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -26,13 +27,31 @@ public class Game implements Serializable {
     @Column(name = "finished")
     private Boolean finished;
 
+    @Column(name = "user1_color")
+    private String user1Color;
+
+    @Column(name = "user2_color")
+    private String user2Color;
+
+    @Column(name = "winner")
+    private int winner;
+
+    @Column(name = "is_forfeit")
+    private boolean isForfeit;
+
+    @Column(name = "forfeit_user")
+    private int forfeitUser;
+
+    @Column(name = "turn")
+    private int turn;
+
     @ManyToOne
     @JoinColumn(name = "user1_id")
-    private User player1;
+    private User user1;
 
     @ManyToOne
     @JoinColumn(name = "user2_id")
-    private User player2;
+    private User user2;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -45,27 +64,28 @@ public class Game implements Serializable {
     private Date updateDate;
 
     @Transient
-    private GameStats gameStats;
-    @Transient
     private RuleEnforcer ruleEnforcer;
 
     public Game(){}
 
-    public Game(User player1, User player2) {
-        this(UUID.randomUUID(), player1, player2);
+    public Game(User user1, User user2) {
+        this(UUID.randomUUID(), user1, user2);
     }
 
-    public Game(UUID gameId, User player1, User player2) {
+    public Game(UUID gameId, User user1, User user2) {
         this.gameId = gameId;
-        this.player1 = player1;
-        this.player2 = player2;
+        this.user1 = user1;
+        this.user2 = user2;
         this.finished = Boolean.FALSE;
-        this.gameStats = new GameStats(player1, player2);
+        this.user1Color = Color.BLACK.toString();
+        this.user2Color = Color.WHITE.toString();
+        this.isForfeit = false;
+        this.turn = 1;
         this.gameBoard = new GameBoard();
         this.ruleEnforcer = new RuleEnforcer(this);
     }
 
-    public void createUserId() {
+    public void createGameId() {
         if (this.gameId == null) {
             this.gameId = UUID.randomUUID();
         }
@@ -79,7 +99,7 @@ public class Game implements Serializable {
         }
     }
 
-    public void makeMove(Move move) throws IllegalMoveException {
+    public void makeMove(Move move) {
         try {
             if(move.getMoveType() == MoveType.CAPTURE) {
                 performCapture(move);
@@ -88,58 +108,84 @@ public class Game implements Serializable {
             } else if(move.getMoveType() == MoveType.FLIP) {
                 performFlip(move);
             } else {
-                throw new IllegalMoveException();
+                throw new IllegalMoveException("Move type unrecognized " + move.getMoveType());
             }
-        } catch(CaptureException | TravelException | FlipException e) {
+            switchTurn(turn);
+        } catch(IllegalMoveException e) {
             e.printStackTrace();
-            throw new IllegalMoveException();
         }
     }
 
-    private void performCapture(Move move) throws CaptureException {
+    private void performCapture(Move move) {
         try {
             if(ruleEnforcer.isValidCapture(move)) {
                 gameBoard.removePiece(move.getTo());
                 gameBoard.swapPieces(move.getFrom(), move.getTo());
             }
-        } catch(CoordinateOutOfBoundsException | IllegalCaptureException | CaptureEmptySpaceException | SameColorException | GameOverException | IllegalHopException e) {
+        } catch(CoordinateOutOfBoundsException | GameOverException | IllegalMoveException e) {
             e.printStackTrace();
-            throw new CaptureException();
         }
     }
 
-    private void performTravel(Move move) throws TravelException {
+    private void performTravel(Move move) {
         try {
             if(ruleEnforcer.isValidTravel(move)) {
                 gameBoard.swapPieces(move.getFrom(), move.getTo());
             }
-        } catch(CoordinateOutOfBoundsException | SpaceOccupiedException | GameOverException | IllegalHopException e) {
+        } catch(CoordinateOutOfBoundsException | GameOverException | IllegalMoveException e) {
             e.printStackTrace();
-            throw new TravelException();
         }
     }
 
-    private void performFlip(Move move) throws FlipException {
+    private void performFlip(Move move) {
         try {
             if(ruleEnforcer.isValidFlip(move)) {
                 gameBoard.pieceAt(move.getTo()).flipPiece();
             }
-        } catch(CoordinateOutOfBoundsException | PieceFaceUpException | GameOverException e) {
+        } catch(CoordinateOutOfBoundsException | GameOverException | IllegalMoveException e) {
             e.printStackTrace();
-            throw new FlipException();
         }
+    }
+
+    private void gameOver(UUID winnerId, boolean forfeit) throws GameDoesNotContainUserException {
+        this.finished = true;
+
+        // Set winner, update user records
+        if (winnerId == user1.getUserId()) {
+            this.winner = 1;
+            this.user1.updateGameStatsWhenFinished(true);
+            this.user2.updateGameStatsWhenFinished(false);
+        }
+        else if (winnerId == user2.getUserId()) {
+            this.winner = 2;
+            this.user1.updateGameStatsWhenFinished(false);
+            this.user2.updateGameStatsWhenFinished(true);
+        }
+        else {
+            throw new GameDoesNotContainUserException();
+        }
+
+        // Set forfeit
+        if (forfeit) {
+            this.isForfeit = true;
+            this.forfeitUser = (this.winner == 1) ? 2 : 1;
+        }
+    }
+
+    public void forfeitGame(UUID winnerId) throws GameDoesNotContainUserException {
+        gameOver(winnerId, true);
     }
 
     public UUID getGameId() {
         return gameId;
     }
 
-    public User getPlayer1() {
-        return player1;
+    public User getUser1() {
+        return user1;
     }
 
-    public User getPlayer2() {
-        return player2;
+    public User getUser2() {
+        return user2;
     }
 
     public GameBoard getGameBoard() {
@@ -150,16 +196,36 @@ public class Game implements Serializable {
         this.gameBoard = gameBoard;
     }
 
-    public GameStats getGameStats() {
-        return gameStats;
+    public String getUser1Color() {
+        return user1Color;
     }
 
-    public Boolean getFinished() {
+    public String getUser2Color() {
+        return user2Color;
+    }
+
+    public boolean getFinished() {
         return finished;
     }
 
     public void setFinished(Boolean finished) {
         this.finished = finished;
+    }
+
+    public boolean getIsForfeit() {
+        return isForfeit;
+    }
+
+    public int getForfeitUser() {
+        return forfeitUser;
+    }
+
+    public int getTurn() {
+        return turn;
+    }
+
+    private void switchTurn(int currentTurn) {
+        turn = (currentTurn == 1) ? 2 : 1;
     }
 
     public Date getCreateDate() {
@@ -180,15 +246,10 @@ public class Game implements Serializable {
         this.updateDate = new Date();
     }
 
-    // TODO - Make game stats a database table? or make player color part of game record?
     @Override
     public String toString() {
-        String p1Color = null;
-        String p2Color = null;
-        if (gameStats != null) {
-            p1Color = gameStats.getPlayer1Color().toString();
-            p2Color = gameStats.getPlayer2Color().toString();
-        }
-        return player1.getUsername() + " - " + p1Color + "\n" + player2.getUsername() + " - " + p2Color + "\n" + gameBoard.toString();
+        String u1Color = user1Color.toString();
+        String u2Color = user2Color.toString();
+        return user1.getUsername() + " - " + u1Color + "\n" + user2.getUsername() + " - " + u2Color + "\n" + gameBoard.toString();
     }
 }

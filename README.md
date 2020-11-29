@@ -37,6 +37,8 @@ Banshee is built using Java, Maven, Swift
 2. Choose HTTPS and paste in the repository link
 3. Leave defaults and continue through
 4. Refresh Maven imports and run Maven install from the Maven tab
+5. [Configure Database](https://github.com/elavertu9/Banshee/blob/main/team/database_usage.md)
+6. [API Usage](https://github.com/elavertu9/Banshee/blob/main/team/api_usage.md)
 
 ## GitHub Work Flow
 1. Clone repository using HTTPS

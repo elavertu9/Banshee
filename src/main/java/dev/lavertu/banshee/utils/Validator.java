@@ -10,45 +10,45 @@ import java.util.UUID;
 public class Validator {
     private Validator() {}
 
-    public static void validateCreateGameRequest(Map<String, String> payload, UsersService usersService) throws ValidationException, UsernameNotFoundException {
-        String player1Username = payload.get("player1Username");
-        String player2Username = payload.get("player2Username");
-        if (player1Username == null || player2Username == null) {
-            String missingUsername = (player1Username == null) ? "player 1" : "player 2";
-            String failureMessage = String.format("Username for %s not provided. 2 vaild usernames are required to play the game.", missingUsername);
+    public static void validateCreateGameRequest(Map<String, String> payload, UsersService usersService) throws ValidationException, EntityNotFoundException {
+        String user1Username = payload.get("user1Username");
+        String user2Username = payload.get("user2Username");
+        if (user1Username == null || user2Username == null) {
+            String missingUsername = (user1Username == null) ? "user 1" : "user 2";
+            String failureMessage = String.format("Username for %s not provided. 2 valid usernames are required to play the game.", missingUsername);
             throw new ValidationException(failureMessage);
         }
-        validateUserByUsername(player1Username, usersService);
-        validateUserByUsername(player2Username, usersService);
+        validateUserByUsername(user1Username, usersService);
+        validateUserByUsername(user2Username, usersService);
     }
 
-    public static void validateCreateUserRequest(User user, UsersService usersService) throws UsernameAlreadyExistsException, EmailAddressAlreadyExistsException {
+    public static void validateCreateUserRequest(User user, UsersService usersService) throws EntityAlreadyExistsException {
         String username = user.getUsername();
         String emailAddress = user.getEmailAddress();
         User foundUser = usersService.getUserByUsernameOrEmail(username, emailAddress);
         if (foundUser != null) {
             if (foundUser.getUsername().equals(username)) {
-                throw new UsernameAlreadyExistsException("Username " + username + " already taken. Please try another.");
+                throw new EntityAlreadyExistsException("Username " + username + " already taken. Please try another.");
             }
             if (foundUser.getEmailAddress().equals(emailAddress)) {
-                throw new EmailAddressAlreadyExistsException("Email " + emailAddress + " already taken. Please try another.");
+                throw new EntityAlreadyExistsException("Email " + emailAddress + " already taken. Please try another.");
             }
         }
     }
 
-    public static void validateUserByUsername(String username, UsersService usersService) throws UsernameNotFoundException {
+    public static void validateUserByUsername(String username, UsersService usersService) throws EntityNotFoundException {
         User user = usersService.getUserByUsername(username);
         if (user == null) {
             String msg = String.format("Username %s not found. User must be created prior to playing.", username);
-            throw new UsernameNotFoundException(msg);
+            throw new EntityNotFoundException(msg);
         }
     }
 
-    public static void validateUserByUserId(UUID userId, UsersService usersService) throws UserNotFoundException {
+    public static void validateUserByUserId(UUID userId, UsersService usersService) throws EntityNotFoundException {
         User user = usersService.getUserByUserId(userId);
         if (user == null) {
             String msg = String.format("User ID %s not found. User must be created prior to playing.", userId);
-            throw new UserNotFoundException(msg);
+            throw new EntityNotFoundException(msg);
         }
     }
 }
