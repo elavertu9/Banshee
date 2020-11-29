@@ -12,6 +12,7 @@ public class RuleEnforcer {
     }
 
     public boolean isValidCapture(Move move) throws CoordinateOutOfBoundsException, GameOverException, IllegalMoveException {
+        String errorMessage = "";
         if(!game.getFinished()) {
             if(coordinatesInBounds(move)) {
                 if(isValidHop(move)) {
