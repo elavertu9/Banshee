@@ -11,74 +11,62 @@ public class RuleEnforcer {
         this.game = game;
     }
 
-    public boolean isValidCapture(Move move) throws CoordinateOutOfBoundsException, GameOverException, IllegalMoveException {
+    public boolean isValidCapture(Move move) throws CoordinateOutOfBoundsException, IllegalMoveException {
         String errorMessage = "";
-        if(!game.getFinished()) {
-            if(coordinatesInBounds(move)) {
-                if(isValidHop(move)) {
-                    if(!isPieceToEmpty(move)) {
-                        if(!isSameColor(move)) {
-                            if((!isSameCoordinate(move.getFrom(), move.getTo())) && (areFaceUp(move)) && (!isEmptySpace(move.getFrom()) && !isEmptySpace(move.getTo())) && (!isGeneralCapturingSoldier(move)) && ((isSoldierCapturingGeneral(move)) || (canCapture(move))) ) {
-                                return true;
-                            } else {
-                                errorMessage = "Illegal capture attempted \n" + move.toString();
-                            }
+        if(coordinatesInBounds(move)) {
+            if(isValidHop(move)) {
+                if(!isPieceToEmpty(move)) {
+                    if(!isSameColor(move)) {
+                        if((!isSameCoordinate(move.getFrom(), move.getTo())) && (areFaceUp(move)) && (!isEmptySpace(move.getFrom()) && !isEmptySpace(move.getTo())) && (!isGeneralCapturingSoldier(move)) && ((isSoldierCapturingGeneral(move)) || (canCapture(move))) ) {
+                            return true;
                         } else {
-                            errorMessage = "Cannot capture piece of same color \n" + move.toString();
+                            errorMessage = "Illegal capture attempted \n" + move.toString();
                         }
                     } else {
-                        errorMessage = "Cannot capture an empty space \n" + move.toString();
+                        errorMessage = "Cannot capture piece of same color \n" + move.toString();
                     }
                 } else {
-                    errorMessage = "Move Coordinates indicate an invalid hop \n" + move.toString();
+                    errorMessage = "Cannot capture an empty space \n" + move.toString();
                 }
             } else {
-                throw new CoordinateOutOfBoundsException(move.toString());
+                errorMessage = "Move Coordinates indicate an invalid hop \n" + move.toString();
             }
         } else {
-            throw new GameOverException();
+            throw new CoordinateOutOfBoundsException(move.toString());
         }
 
         throw new IllegalMoveException(errorMessage);
     }
 
-    public boolean isValidTravel(Move move) throws CoordinateOutOfBoundsException, GameOverException, IllegalMoveException {
+    public boolean isValidTravel(Move move) throws CoordinateOutOfBoundsException, IllegalMoveException {
         String errorMessage = "";
-        if(!game.getFinished()) {
-            if(coordinatesInBounds(move)) {
-                if(isValidHop(move)) {
-                    if(isPieceToEmpty(move)) {
-                        return true;
-                    } else {
-                        errorMessage = "Space occupied when attempting to travel \n" + move.toString();
-                    }
-                } else {
-                    errorMessage = "Move Coordinates indicate an invalid hop \n" + move.toString();
-                }
-            } else {
-                throw new CoordinateOutOfBoundsException(move.toString());
-            }
-        } else {
-            throw new GameOverException();
-        }
-
-        throw new IllegalMoveException(errorMessage);
-    }
-
-    public boolean isValidFlip(Move move) throws CoordinateOutOfBoundsException, GameOverException, IllegalMoveException {
-        if(!game.getFinished()) {
-            if(coordinatesInBounds(move)) {
-                iPiece piece = game.getGameBoard().pieceAt(move.getTo());
-                if(!piece.getIsFaceUp()) {
+        if(coordinatesInBounds(move)) {
+            if(isValidHop(move)) {
+                if(isPieceToEmpty(move)) {
                     return true;
                 } else {
-                    throw new IllegalMoveException("Piece already face up \n" + move.toString());
+                    errorMessage = "Space occupied when attempting to travel \n" + move.toString();
                 }
             } else {
-                throw new CoordinateOutOfBoundsException(move.toString());
+                errorMessage = "Move Coordinates indicate an invalid hop \n" + move.toString();
             }
         } else {
-            throw new GameOverException();
+            throw new CoordinateOutOfBoundsException(move.toString());
+        }
+
+        throw new IllegalMoveException(errorMessage);
+    }
+
+    public boolean isValidFlip(Move move) throws CoordinateOutOfBoundsException, IllegalMoveException {
+        if(coordinatesInBounds(move)) {
+            iPiece piece = game.getGameBoard().pieceAt(move.getTo());
+            if(!piece.getIsFaceUp()) {
+                return true;
+            } else {
+                throw new IllegalMoveException("Piece already face up \n" + move.toString());
+            }
+        } else {
+            throw new CoordinateOutOfBoundsException(move.toString());
         }
     }
 
