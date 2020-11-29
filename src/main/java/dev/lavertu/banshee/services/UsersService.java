@@ -48,6 +48,10 @@ public class UsersService {
         return usersRepository.getUserByEmailAddress(emailAddress);
     }
 
+    public void saveUser(User user) {
+        usersRepository.saveUser(user);
+    }
+
     public User updateUser(UUID userId, User user) throws EntityNotFoundException {
         String firstName = user.getFirstName();
         String lastName = user.getLastName();

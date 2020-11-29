@@ -1,5 +1,7 @@
 package dev.lavertu.banshee.utils;
 
+import dev.lavertu.banshee.exception.CoordinateOutOfBoundsException;
+import dev.lavertu.banshee.exception.GameOverException;
 import dev.lavertu.banshee.exception.IllegalMoveException;
 import dev.lavertu.banshee.game.*;
 import java.util.Scanner;
@@ -27,7 +29,7 @@ public class ServerCommandParser {
         }
     }
 
-    private void handleInput(String input) throws IllegalMoveException {
+    private void handleInput(String input) throws IllegalMoveException, GameOverException, CoordinateOutOfBoundsException {
         String[] inputArray = input.split(" ");
         if(inputArray.length > 0) {
             String command = inputArray[0].toLowerCase();

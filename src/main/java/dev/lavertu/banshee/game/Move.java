@@ -1,9 +1,14 @@
 package dev.lavertu.banshee.game;
 
+import javax.validation.constraints.NotNull;
+
 public class Move {
 
+	@NotNull
 	private Coordinate to;
+	@NotNull
 	private Coordinate from;
+	@NotNull
 	private MoveType moveType;
 
 	public Move(Coordinate from, Coordinate to, MoveType moveType) {
