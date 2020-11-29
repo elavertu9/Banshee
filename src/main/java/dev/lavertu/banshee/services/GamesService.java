@@ -21,7 +21,7 @@ public class GamesService {
     private GamesRepository gamesRepository;
 
     public Game createGame(Game game) {
-        game.createUserId();
+        game.createGameId();
         gamesRepository.saveGame(game);
         return game;
     }
@@ -39,11 +39,7 @@ public class GamesService {
         return gamesRepository.getGameByGameId(gameId);
     }
 
-    public List<Game> getGamesByPlayer1Id(UUID player1Id) {
-        return gamesRepository.getGamesByPlayer1Id(player1Id);
-    }
-
-    public List<Game> getGamesByPlayer2Id(UUID player2Id) {
-        return gamesRepository.getGamesByPlayer2Id(player2Id);
+    public List<Game> getGamesByUserId(UUID userId) {
+        return gamesRepository.getGamesByUserId(userId);
     }
 }

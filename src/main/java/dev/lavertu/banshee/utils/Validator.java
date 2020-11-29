@@ -11,15 +11,15 @@ public class Validator {
     private Validator() {}
 
     public static void validateCreateGameRequest(Map<String, String> payload, UsersService usersService) throws ValidationException, UsernameNotFoundException {
-        String player1Username = payload.get("player1Username");
-        String player2Username = payload.get("player2Username");
-        if (player1Username == null || player2Username == null) {
-            String missingUsername = (player1Username == null) ? "player 1" : "player 2";
-            String failureMessage = String.format("Username for %s not provided. 2 vaild usernames are required to play the game.", missingUsername);
+        String user1Username = payload.get("user1Username");
+        String user2Username = payload.get("user2Username");
+        if (user1Username == null || user2Username == null) {
+            String missingUsername = (user1Username == null) ? "user 1" : "user 2";
+            String failureMessage = String.format("Username for %s not provided. 2 valid usernames are required to play the game.", missingUsername);
             throw new ValidationException(failureMessage);
         }
-        validateUserByUsername(player1Username, usersService);
-        validateUserByUsername(player2Username, usersService);
+        validateUserByUsername(user1Username, usersService);
+        validateUserByUsername(user2Username, usersService);
     }
 
     public static void validateCreateUserRequest(User user, UsersService usersService) throws UsernameAlreadyExistsException, EmailAddressAlreadyExistsException {

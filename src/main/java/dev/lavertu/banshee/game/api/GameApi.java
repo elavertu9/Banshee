@@ -47,13 +47,11 @@ public class GameApi {
     }
 
     @PostMapping(value = "/api/game/create", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Game> createGame(@RequestBody Map<String, String> payload) throws GameMappingException, UsernameNotFoundException, ValidationException {
+    public ResponseEntity<Game> createGame(@RequestBody Map<String, String> payload) throws UsernameNotFoundException, ValidationException {
         Validator.validateCreateGameRequest(payload, usersService);
-        String player1Username = payload.get("player1Username");
-        String player2Username = payload.get("player2Username");
-        User player1 = usersService.getUserByUsername(player1Username);
-        User player2 = usersService.getUserByUsername(player2Username);
-        Game game = gamesService.createGame(new Game(player1, player2));
+        User user1 = usersService.getUserByUsername(payload.get("user1Username"));
+        User user2 = usersService.getUserByUsername(payload.get("user2Username"));
+        Game game = gamesService.createGame(new Game(user1, user2));
         return ResponseEntity.ok().body(game);
     }
 
@@ -69,23 +67,16 @@ public class GameApi {
         return ResponseEntity.ok().body(gameList);
     }
 
-    @GetMapping(value = "/api/game/id/{gameId}", produces = "application/Json")
+    @GetMapping(value = "/api/game/gameId/{gameId}", produces = "application/Json")
     public ResponseEntity<Game> getGameByGameId(@PathVariable UUID gameId) {
         Game game = gamesService.getGameByGameId(gameId);
         return ResponseEntity.ok().body(game);
     }
 
-    @GetMapping(value = "/api/game/player1Id/{player1Id}", produces = "application/Json")
-    public ResponseEntity<List<Game>> getGamesByPlayer1Id(@PathVariable UUID player1Id) throws UserNotFoundException {
-        Validator.validateUserByUserId(player1Id, usersService);
-        List<Game> games = gamesService.getGamesByPlayer1Id(player1Id);
-        return ResponseEntity.ok().body(games);
-    }
-
-    @GetMapping(value = "/api/game/player2Id/{player2Id}", produces = "application/Json")
-    public ResponseEntity<List<Game>> getGamesByPlayer2Id(@PathVariable UUID player2Id) throws UserNotFoundException {
-        Validator.validateUserByUserId(player2Id, usersService);
-        List<Game> games = gamesService.getGamesByPlayer2Id(player2Id);
+    @GetMapping(value = "/api/game/userId/{userId}", produces = "application/Json")
+    public ResponseEntity<List<Game>> getGamesByUserId(@PathVariable UUID userId) throws UserNotFoundException {
+        Validator.validateUserByUserId(userId, usersService);
+        List<Game> games = gamesService.getGamesByUserId(userId);
         return ResponseEntity.ok().body(games);
     }
 }

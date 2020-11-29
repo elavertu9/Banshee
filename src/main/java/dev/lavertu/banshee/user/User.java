@@ -40,6 +40,15 @@ public class User implements Serializable {
     @NotBlank(message = "Email address is required")
     private String emailAddress;
 
+    @Column(name = "wins")
+    private int wins;
+
+    @Column(name = "losses")
+    private int losses;
+
+    @Column(name = "games_played")
+    private int gamesPlayed;
+
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_date")
@@ -52,8 +61,6 @@ public class User implements Serializable {
 
     @Transient
     private ArrayList<iPiece> myPieces;
-    @Transient
-    private UserStats userStats;
 
     public User(){}
 
@@ -63,7 +70,6 @@ public class User implements Serializable {
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;
-        this.userStats = new UserStats();
     }
 
     public void createUserId() {
@@ -106,6 +112,34 @@ public class User implements Serializable {
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
+    }
+
+    public int getWins() {
+        return this.wins;
+    }
+
+    public int getLosses() {
+        return this.losses;
+    }
+
+    public int getGamesPlayed() {
+        return this.gamesPlayed;
+    }
+
+    public void initializeGameStats() {
+        this.wins = 0;
+        this.losses = 0;
+        this.gamesPlayed = 0;
+    }
+
+    public void updateGameStatsWhenFinished(boolean won) {
+        if (won) {
+            this.wins++;
+        }
+        else {
+            this.losses++;
+        }
+        this.gamesPlayed++;
     }
 
     public Date getCreateDate() {

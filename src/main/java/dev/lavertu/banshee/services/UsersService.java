@@ -24,6 +24,7 @@ public class UsersService {
 
     public User createUser(User user) throws UsernameAlreadyExistsException, EmailAddressAlreadyExistsException {
         user.createUserId();
+        user.initializeGameStats();
         usersRepository.saveUser(user);
         return user;
     }
