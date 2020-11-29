@@ -57,9 +57,8 @@ curl -X POST --url http://localhost:8080/api/game/create -H "Content-Type:applic
 * Requisites
     * Users must be created in Banshee before a game can be started
 * Possible Errors
-    * GameMappingException - If there is an internal error storing the gameBoard
-        * UsernameNotFoundException - If a provided username is invalid or not found in the currently created Users
-        * ValidationException - If there a problem validating the input, or if some required parameters are not supplied
+    * UsernameNotFoundException - If a provided username is invalid or not found in the currently created Users
+    * ValidationException - If there is a problem validating the input, or if some required parameters are not supplied
 * Description
     * Created a new Banshee game using the provided usernames as User 1 and User 2
 
@@ -115,7 +114,7 @@ curl -X POST --url http://localhost:8080/api/game/create -H "Content-Type:applic
 curl -X POST --url http://localhost:8080/api/user/create -H 'Content-Type: application/json' -d '{"username": "pizza", "firstName": "Pizza", "lastName": "Man", "emailAddress": "pizza@gmail.com"}'
 ```
 
-##### Create User
+#### Create User
 ```text
 [GET] /api/user/create
 ```
@@ -134,7 +133,7 @@ curl -X POST --url http://localhost:8080/api/user/create -H 'Content-Type: appli
 * Description
     * Creates a new Banshee user using the supplied parameters
 
-##### Update User
+#### Update User
 ```text
 [PUT] /api/user/update/{userId}
 ```
