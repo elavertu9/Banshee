@@ -42,7 +42,7 @@ public class GamesRepository {
     }
 
     public List<Game> getGamesByUserId(UUID userId) {
-        String hql = "SELECT g FROM Game g WHERE :userId in (g.user1.userId, g.user2.userId)";
+        String hql = "SELECT g FROM Game g WHERE :userId IN (g.user1.userId, g.user2.userId)";
         TypedQuery<Game> query = entityManager.createQuery(hql, Game.class);
         query.setParameter("userId", userId);
         return query.getResultList();
